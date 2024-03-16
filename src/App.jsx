@@ -9,7 +9,7 @@ function App() {
       </div>
       <h1>Project 2</h1>
       <div className="card">
-        <p>
+        <p className="text-2xl">
           Edit <code>src/App.js</code> and save to reload.
         </p>
       </div>

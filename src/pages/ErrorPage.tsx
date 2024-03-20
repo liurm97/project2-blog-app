@@ -15,12 +15,12 @@ export default function ErrorPage() {
   }, []);
 
   return (
-    <div className="h-[100vh] flex flex-col items-center justify-center p-4">
+    <div className="h-[100vh] flex flex-col items-center justify-center p-8">
       <img src={errorImage} width="200" alt="Error page" />
-      <h1 className="mt-8 text-3xl text-center">
+      <h1 className="mt-8 text-4xl text-center">
         Oops we can't find what you're looking for
       </h1>
-      <p className="mt-4 mb-6 text-xl text-gray-500">
+      <p className="mt-8 mb-12 text-xl text-gray-500">
         Redirecting you to the homepage...
       </p>
       <Spinner />

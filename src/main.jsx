@@ -8,20 +8,32 @@ import Post from "./pages/Post";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignupPage";
 import ErrorPage from "./pages/ErrorPage";
+import ExplorePage from "./pages/ExplorePage";
+import NavBar from "./components/NavBar";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <NavBar />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "/profiles/:bloggerName",
-    element: <ProfilePage />,
-  },
-  {
-    path: "/profiles/:bloggerName/posts/:postTitle",
-    element: <Post />,
+    children: [
+      {
+        path: "/home",
+        element: <HomePage />,
+      },
+      {
+        path: "/explore",
+        element: <ExplorePage />,
+      },
+      {
+        path: "/profiles/:bloggerName",
+        element: <ProfilePage />,
+      },
+      {
+        path: "/profiles/:bloggerName/posts/:postTitle",
+        element: <Post />,
+      },
+    ],
   },
   {
     path: "/signup",

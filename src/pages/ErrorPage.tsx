@@ -9,7 +9,7 @@ export default function ErrorPage() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      navigate("/");
+      navigate("/home");
     }, 2000);
     return () => clearTimeout(timeout);
   }, []);

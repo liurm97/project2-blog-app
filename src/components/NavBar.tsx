@@ -1,12 +1,35 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate, NavLink } from "react-router-dom";
 
 const NavBar = () => {
+  const navigate = useNavigate();
+
   return (
     <>
-      <div className="bg-gray-700 py-6 px-14">Navbar Placeholder</div>
+      <nav className="py-6 px-14 flex justify-between items-center fixed w-full backdrop-blur-sm z-1">
+        <p>Logo</p>
+        <div className="flex items-center">
+          <NavLink
+            to={`/explore`}
+            className={({ isActive }) => {
+              return isActive
+                ? `mr-12 px-2 py-3 text-white hover:text-white`
+                : "mr-12 px-2 py-3 text-gray-400 hover:text-white transition-all";
+            }}
+            caseSensitive
+          >
+            Explore
+          </NavLink>
+          <button
+            className="rounded-md bg-teal-800 px-6 py-3 font-medium hover:bg-teal-700 transition-all"
+            onClick={() => navigate("/signup")}
+          >
+            Start writing
+          </button>
+        </div>
+      </nav>
       <Outlet />
     </>
-  )
+  );
 };
 export default NavBar;

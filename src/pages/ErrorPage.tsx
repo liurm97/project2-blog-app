@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate, useRouteError } from "react-router-dom";
 import errorImage from "../assets/error.svg";
 import Spinner from "../components/Spinner";
 
 export default function ErrorPage() {
-  const error = useRouteError() as any;
+  const error = useRouteError();
   const navigate = useNavigate();
 
   useEffect(() => {

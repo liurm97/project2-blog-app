@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate, useRouteError } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import errorImage from "../assets/error.svg";
 import Spinner from "../components/Spinner";
 

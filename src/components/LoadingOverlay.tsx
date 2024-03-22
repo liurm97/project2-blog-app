@@ -1,9 +1,12 @@
 // Overlay upon initial loading
 
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function LoadingOverlay({ isLoadingVisible }) {
+export default function LoadingOverlay({
+  isLoadingVisible,
+}: {
+  isLoadingVisible: boolean;
+}) {
   return (
     <AnimatePresence>
       {isLoadingVisible && (

@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet, useNavigate, NavLink } from "react-router-dom";
 
 const NavBar = () => {

@@ -4,12 +4,12 @@ import errorImage from "../assets/error.svg";
 import Spinner from "../components/Spinner";
 
 export default function ErrorPage() {
-  const error = useRouteError();
+  // const error = useRouteError();
   const navigate = useNavigate();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      navigate("/home");
+      navigate("/");
     }, 2000);
     return () => clearTimeout(timeout);
   }, []);

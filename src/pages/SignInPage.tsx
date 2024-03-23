@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import splashImage2 from "../assets/splash2.svg";
+
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -8,16 +10,17 @@ export default function SignInPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(email, password);
+    // To connect to Firebase Auth
   };
 
   const navigate = useNavigate();
 
   return (
-    <div className="flex h-screen flex-1 flex-col justify-center items-center px-6  lg:px-8 bg-teal-800">
+    <div className="flex h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8 bg-teal-800">
+      <img src={splashImage2} alt="Splash of color" width="200" />
+
       <div>
-        <h2 className="text-center text-2xl font-bold">
-          Welcome Back!
-        </h2>
+        <h2 className="text-center text-2xl font-bold mt-4">Welcome back!</h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -54,7 +57,6 @@ export default function SignInPage() {
                   Forgot password?
                 </a>
               </div> */}
-
             </div>
             <div className="mt-2">
               <input
@@ -78,7 +80,7 @@ export default function SignInPage() {
               Sign in
             </button>
             <button
-              className="mt-6 flex w-full justify-center rounded-md border-2 border-teal-700 px-3 font-semibold py-2 text-white hover:bg-gray-600 transition-all"
+              className="mt-6 flex w-full justify-center rounded-md border-2 border-teal-700 hover:border-teal-400 px-3 font-semibold py-2 text-white transition-all"
               onClick={() => navigate("/signup")}
             >
               Create an account

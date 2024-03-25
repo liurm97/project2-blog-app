@@ -55,7 +55,6 @@ export default function SignUpPage() {
   };
 
   return (
-    <>
       <div className="flex h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8 bg-slate-800">
         <img src={splashImage1} alt="Splash of color" width="150" />
         <div>
@@ -148,6 +147,5 @@ export default function SignUpPage() {
           </form>
         </div>
       </div>
-    </>
   );
 }

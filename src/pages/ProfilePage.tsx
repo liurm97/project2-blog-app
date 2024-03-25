@@ -13,7 +13,6 @@ export default function ProfilePage() {
       if (user) {
         setIsLoggedIn(true);
         setCurrentUser(user);
-        console.log("User is signed in");
       } else {
         // console.log("No user is signed in");
       }

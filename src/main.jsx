@@ -10,6 +10,7 @@ import SignUpPage from "./pages/SignupPage";
 import ErrorPage from "./pages/ErrorPage";
 import ExplorePage from "./pages/ExplorePage";
 import NavBar from "./components/NavBar";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ChakraProvider
+      toastOptions={{ defaultOptions: { position: "bottom" } }}
+      resetCSS={false}
+      disableGlobalStyle={true}
+    >
+      <RouterProvider router={router} />
+    </ChakraProvider>
   </React.StrictMode>
 );

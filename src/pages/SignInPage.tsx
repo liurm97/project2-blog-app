@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import splashImage2 from "../assets/splash2.svg";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { useToast } from "@chakra-ui/react";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   const navigate = useNavigate();
 
@@ -26,11 +28,27 @@ export default function SignInPage() {
       console.log("UserID", userID);
     } catch (error: any) {
       // If login details are incorrect, display alert message.
-      if (error.code === "auth/invalid-credential")
-        alert("Please check your login details and try again.");
-      // if (error.code === "user-not-found")
-      //   alert("No existing account found. Please sign up.");
-      console.log(error.code);
+      if (error.code === "auth/invalid-credential") {
+        console.log(error.code);
+        toast({
+          title: "Invalid login credentials",
+          description: "Please use a valid email address / password.",
+          status: "error",
+          isClosable: true,
+          duration: 3000,
+          variant: "solid",
+        });
+      } else {
+        console.log(error.code);
+        toast({
+          title: "An error occurred",
+          description: "Please try again later.",
+          status: "error",
+          isClosable: true,
+          duration: 3000,
+          variant: "solid",
+        });
+      }
     }
     setEmail("");
     setPassword("");
@@ -62,8 +80,8 @@ export default function SignInPage() {
                 disabled={isLoading === true}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="johndoe@gmail.com"
-                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
-                  isLoading === true ? "opacity-20 cursor-not-allowed" : ""
+                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
+                  isLoading ? "opacity-20 cursor-not-allowed" : ""
                 }`}
               />
             </div>
@@ -94,28 +112,30 @@ export default function SignInPage() {
                 required
                 disabled={isLoading === true}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
-                  isLoading === true ? "opacity-20 cursor-not-allowed" : ""
+                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
+                  isLoading ? "opacity-20 cursor-not-allowed" : ""
                 }`}
               />
             </div>
           </div>
           <div>
             <button
+              disabled={isLoading}
               type="submit"
-              className={`mt-8 flex w-full justify-center rounded-md bg-teal-600 px-3 font-semibold py-2 text-white hover:bg-teal-700 transition-all ${
+              className={`mt-8 flex w-full justify-center rounded-md bg-teal-600 px-3 font-semibold py-2 text-white transition-all ${
                 isLoading === true
                   ? "opacity-50 hover:bg-teal-600 cursor-not-allowed"
-                  : ""
+                  : "hover:bg-teal-700"
               }`}
             >
               Login
             </button>
             <button
-              className={`mt-6 flex w-full justify-center rounded-md border-2 border-teal-700 hover:border-teal-400 px-3 font-semibold py-2 text-white transition-all ${
-                isLoading === true
+              disabled={isLoading}
+              className={`mt-6 flex w-full justify-center rounded-md border-2 border-teal-700 px-3 font-semibold py-2 text-white transition-all ${
+                isLoading
                   ? "opacity-50 hover:border-teal-700 hover:bg-transparent cursor-not-allowed"
-                  : ""
+                  : "hover:border-teal-400"
               }`}
               onClick={() => navigate("/signup")}
             >

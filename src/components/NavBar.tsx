@@ -19,6 +19,16 @@ const NavBar = () => {
           >
             Explore
           </NavLink>
+          <NavLink
+            to={`/signin`}
+            className={({ isActive }) => {
+              return isActive
+                ? `mr-12 px-2 py-3 text-white hover:text-white`
+                : "mr-12 px-2 py-3 text-gray-400 hover:text-white transition-all";
+            }}
+          >
+            Login
+          </NavLink>
           <button
             className="rounded-md bg-teal-800 px-6 py-3 font-medium hover:bg-teal-700 transition-all"
             onClick={() => navigate("/signup")}

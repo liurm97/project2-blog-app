@@ -1,5 +1,6 @@
 // Import the functions from the SDKs
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_SOME_API_KEY,
@@ -13,6 +14,9 @@ const firebaseConfig = {
 
 // Initialize Firebase with the project configuration
 const firebaseApp = initializeApp(firebaseConfig);
+
+// Initialize Firebase Authentication and get a reference to the service
+export const auth = getAuth(firebaseApp);
 
 // PLACEHOLDERS TO USE REALTIME DB & STORAGE
 // import { getDatabase } from "firebase/database";

@@ -1,19 +1,41 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import splashImage2 from "../assets/splash2.svg";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(email, password);
-    // To connect to Firebase Auth
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const signIn = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      // Sign in with credentials entered by the user
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      console.log("User", user);
+      // Extract user ID from the user object to use for routing
+      const userID = user.user.uid;
+      navigate(`/profiles/${userID}`);
+
+      console.log("User", user);
+      console.log("UserID", userID);
+    } catch (error: any) {
+      // If login details are incorrect, display alert message.
+      if (error.code === "auth/invalid-credential")
+        alert("Please check your login details and try again.");
+      // if (error.code === "user-not-found")
+      //   alert("No existing account found. Please sign up.");
+      console.log(error.code);
+    }
+    setEmail("");
+    setPassword("");
+    setIsLoading(false);
+  };
 
   return (
     <div className="flex h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8 bg-teal-800">
@@ -24,7 +46,7 @@ export default function SignInPage() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-8" onSubmit={handleSubmit} method="POST">
+        <form className="space-y-8" onSubmit={signIn}>
           <div>
             <label htmlFor="email" className="block font-medium">
               Email address
@@ -37,9 +59,12 @@ export default function SignInPage() {
                 value={email}
                 autoComplete="email"
                 required
+                disabled={isLoading === true}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="johndoe@gmail.com"
-                className="block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black"
+                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
+                  isLoading === true ? "opacity-20 cursor-not-allowed" : ""
+                }`}
               />
             </div>
           </div>
@@ -67,20 +92,31 @@ export default function SignInPage() {
                 placeholder="Enter your password"
                 autoComplete="current-password"
                 required
+                disabled={isLoading === true}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black"
+                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
+                  isLoading === true ? "opacity-20 cursor-not-allowed" : ""
+                }`}
               />
             </div>
           </div>
           <div>
             <button
               type="submit"
-              className="mt-8 flex w-full justify-center rounded-md bg-teal-600 px-3 font-semibold py-2 text-white hover:bg-teal-700 transition-all"
+              className={`mt-8 flex w-full justify-center rounded-md bg-teal-600 px-3 font-semibold py-2 text-white hover:bg-teal-700 transition-all ${
+                isLoading === true
+                  ? "opacity-50 hover:bg-teal-600 cursor-not-allowed"
+                  : ""
+              }`}
             >
-              Sign in
+              Login
             </button>
             <button
-              className="mt-6 flex w-full justify-center rounded-md border-2 border-teal-700 hover:border-teal-400 px-3 font-semibold py-2 text-white transition-all"
+              className={`mt-6 flex w-full justify-center rounded-md border-2 border-teal-700 hover:border-teal-400 px-3 font-semibold py-2 text-white transition-all ${
+                isLoading === true
+                  ? "opacity-50 hover:border-teal-700 hover:bg-transparent cursor-not-allowed"
+                  : ""
+              }`}
               onClick={() => navigate("/signup")}
             >
               Create an account

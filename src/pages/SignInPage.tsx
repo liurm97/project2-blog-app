@@ -23,9 +23,6 @@ export default function SignInPage() {
       // Extract user ID from the user object to use for routing
       const userID = user.user.uid;
       navigate(`/profiles/${userID}`);
-
-      console.log("User", user);
-      console.log("UserID", userID);
     } catch (error: any) {
       // If login details are incorrect, display alert message.
       if (error.code === "auth/invalid-credential") {

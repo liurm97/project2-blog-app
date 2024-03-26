@@ -6,19 +6,11 @@ import { Avatar } from "@chakra-ui/react";
 
 const NavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedIn(true);
-        setCurrentUser(user);
-        console.log(currentUser);
-      } else {
-        setIsLoggedIn(false);
-        setCurrentUser({});
-      }
+      user ? setIsLoggedIn(true) : setIsLoggedIn(false);
     });
   });
 
@@ -69,7 +61,7 @@ const NavBar = () => {
               Logout{" "}
             </button>
           )}
-          {isLoggedIn && <Avatar name={currentUser.displayName} />}
+          {isLoggedIn && <Avatar name={auth.currentUser.displayName} />}
         </div>
       </nav>
       <Outlet />

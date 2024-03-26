@@ -1,39 +1,25 @@
-import { onAuthStateChanged, updateProfile } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 
 export default function ProfilePage() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({}); // need to define to get rid of error
   const [isLoading, setIsLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const toast = useToast();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedIn(true);
-        setCurrentUser(user);
-        console.log(currentUser);
-      } else {
-        // console.log("No user is signed in");
-      }
-    });
-  });
-
   const saveName = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(firstName, lastName);
     setIsLoading(true);
     try {
-      updateProfile(auth.currentUser, {
+      await updateProfile(auth.currentUser, {
         displayName: `${firstName} ${lastName}`,
       });
-      navigate(`/profiles/${currentUser.uid}`);
+      auth.currentUser.displayName = `${firstName} ${lastName}`;
+      navigate(`/profiles/${auth.currentUser.displayName}`);
     } catch (error: any) {
       toast({
         title: "An error occurred",

@@ -1,13 +1,8 @@
 import { Outlet, useNavigate, NavLink } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useState, useEffect } from "react";
 import { Avatar } from "@chakra-ui/react";
-
-
-
-
-
 
 const NavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,7 +16,8 @@ const NavBar = () => {
         setCurrentUser(user);
         console.log(currentUser);
       } else {
-        // console.log("No user is signed in");
+        setIsLoggedIn(false);
+        setCurrentUser({});
       }
     });
   });
@@ -60,6 +56,17 @@ const NavBar = () => {
               onClick={() => navigate("/signup")}
             >
               Start writing
+            </button>
+          )}
+          {isLoggedIn && (
+            <button
+              className="mr-12 font-medium"
+              onClick={() => {
+                signOut(auth);
+                navigate("/");
+              }}
+            >
+              Logout{" "}
             </button>
           )}
           {isLoggedIn && <Avatar name={currentUser.displayName} />}

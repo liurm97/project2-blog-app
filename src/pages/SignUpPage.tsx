@@ -21,7 +21,7 @@ export default function SignUpPage() {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       // Extract user ID from the user object to use for routing
       const userID = user.user.uid;
-      navigate(`/profiles/${userID}`);
+      navigate(`/profiles/${userID}/settings`);
 
       console.log("User", user);
       console.log("UserID", userID);

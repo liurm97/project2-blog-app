@@ -18,38 +18,39 @@ export default function LoadingOverlay({
   const rounded = useTransform(count, Math.round);
 
   useEffect(() => {
-    setTimeout(() => animate(count, 100, { duration: 2 }), 1000);
+    setTimeout(() => animate(count, 100, { duration: 2.3 }), 1000);
   }, []);
 
   return (
     <AnimatePresence>
       {isLoadingVisible && (
         <motion.div
-          exit={{ opacity: 0, transition: { duration: 0.8 } }}
-          className="bg-teal-700 w-screen h-screen absolute flex flex-col justify-center items-center"
+          exit={{ opacity: 0, transition: { duration: 1 } }}
+          className="bg-[#1C0526] w-screen h-screen absolute flex flex-col justify-center items-center"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: 0.3,
-              type: "spring",
               stiffness: 90,
-              duration: 0.2,
+              duration: 0.4,
             }}
-            exit={{ opacity: 0, x: -60, transition: { duration: 0.4 } }}
+            exit={{ opacity: 0, x: -100, transition: { duration: 0.6 } }}
             className="font-medium uppercase tracking-[0.3rem] text-3xl"
           >
             Sincerely
           </motion.div>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: 0.7,
+              type: "spring",
+              stiffness: 90,
             }}
-            exit={{ opacity: 0, x: 60, transition: { duration: 0.4 } }}
-            className="mt-2 text-gray-300"
+            exit={{ opacity: 0, x: 100, transition: { duration: 0.6 } }}
+            className="mt-2 text-gray-400"
           >
             Posts that come to life.
           </motion.div>
@@ -59,10 +60,10 @@ export default function LoadingOverlay({
             transition={{
               delay: 1,
               type: "spring",
-              stiffness: 100,
+              stiffness: 90,
             }}
-            exit={{ opacity: 0, transition: { duration: 0.4 } }}
-            className="mt-2 tracking-widest text-gray-400 font-medium"
+            exit={{ opacity: 0, transition: { duration: 0.6 } }}
+            className="mt-2 tracking-widest text-[#78229D] font-medium"
           >
             {rounded}
           </motion.p>

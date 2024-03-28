@@ -16,7 +16,7 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="py-6 px-14 flex justify-between items-center fixed w-full backdrop-blur-sm z-1">
+      <nav className="py-6 px-24 flex justify-between items-center fixed w-full backdrop-blur-sm z-1">
         <p>Logo</p>
         <div className="flex items-center">
           <NavLink

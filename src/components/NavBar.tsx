@@ -17,7 +17,9 @@ const NavBar = () => {
   return (
     <>
       <nav className="py-6 px-24 flex justify-between items-center fixed w-full backdrop-blur-sm z-1">
-        <p>Logo</p>
+        <NavLink to={`/`} className="text-white hover:text-white">
+          Home
+        </NavLink>
         <div className="flex items-center">
           <NavLink
             to={`/explore`}
@@ -44,7 +46,7 @@ const NavBar = () => {
           )}
           {!isLoggedIn && (
             <button
-              className="rounded-md bg-[#5e167c] px-6 py-3 font-medium hover:bg-[#4e0f68] transition-all"
+              className="rounded-md bg-[#5e167c] hover:bg-[#4e0f68] px-6 py-3 font-medium  transition-all"
               onClick={() => navigate("/signup")}
             >
               Start writing

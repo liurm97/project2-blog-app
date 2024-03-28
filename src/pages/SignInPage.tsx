@@ -53,7 +53,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="flex h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8 bg-teal-800">
+    <div className="flex h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8 bg-gradient-to-tr from-[#020831] to-[#2f0404] ">
       <img src={splashImage2} alt="Splash of color" width="200" />
 
       <div>
@@ -119,10 +119,8 @@ export default function SignInPage() {
             <button
               disabled={isLoading}
               type="submit"
-              className={`mt-8 flex w-full justify-center rounded-md bg-teal-600 px-3 font-semibold py-2 text-white transition-all ${
-                isLoading === true
-                  ? "opacity-50 hover:bg-teal-600 cursor-not-allowed"
-                  : "hover:bg-teal-700"
+              className={`mt-8 flex w-full justify-center rounded-md bg-[#5e167c] hover:bg-[#4e0f68] px-3 font-semibold py-2 text-white transition-all ${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
               Login
@@ -131,7 +129,7 @@ export default function SignInPage() {
               disabled={isLoading}
               className={`mt-6 flex w-full justify-center rounded-md border-2 border-teal-700 px-3 font-semibold py-2 text-white transition-all ${
                 isLoading
-                  ? "opacity-50 hover:border-teal-700 hover:bg-transparent cursor-not-allowed"
+                  ? "opacity-50 cursor-not-allowed"
                   : "hover:border-teal-400"
               }`}
               onClick={() => navigate("/signup")}

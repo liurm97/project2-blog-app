@@ -10,14 +10,13 @@ import analyticsImage from "../assets/analytics.png";
 import customizeImage from "../assets/customize.png";
 
 export default function HomePage() {
-  const [isLoadingVisible, setIsLoadingVisible] = useState(false);
+  const isFirstVisit = sessionStorage.getItem("isFirstVisit");
+  const [isLoadingVisible, setIsLoadingVisible] = useState(!isFirstVisit);
 
   useEffect(() => {
     // Check if it's the user's first visit for the session using sessionStorage
-    const isFirstVisit = sessionStorage.getItem("isFirstVisit");
 
     if (!isFirstVisit) {
-      setIsLoadingVisible(true);
       sessionStorage.setItem("isFirstVisit", "no");
       setTimeout(() => {
         setIsLoadingVisible(false);
@@ -28,30 +27,32 @@ export default function HomePage() {
   return (
     <main className="h-screen">
       <LoadingOverlay isLoadingVisible={isLoadingVisible} />
-      <section className="h-screen flex justify-center items-center relative overflow-hidden -z-10">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-        >
-          <source src={heroImage} type="video/mp4"></source>
-        </video>
-        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40"></div>
+      {!isLoadingVisible && (
+        <section className="h-screen flex justify-center items-center relative overflow-hidden -z-10">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src={heroImage} type="video/mp4"></source>
+          </video>
+          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40"></div>
 
-        <div className="absolute flex flex-col items-center">
-          <p className="text-gray-400 mb-4">Posts that come to life</p>
-          <div>
-            <p className="text-center font-serif text-4xl md:text-6xl">
-              Captivate your audience
-            </p>
+          <div className="absolute flex flex-col items-center">
+            <p className="text-gray-400 mb-4">Posts that come to life</p>
+            <div>
+              <p className="text-center font-serif text-4xl md:text-6xl">
+                Captivate your audience
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {!isLoadingVisible && (
-        <section className="flex flex-col bg-gradient-to-r from-[#280e32] to-[#190322] items-center">
+        <section className="flex flex-col bg-gradient-to-tr from-[#2e1139] to-[#190322] items-center">
           <div className="px-24 py-24 text-center">
             <p className="text-gray-400 mb-4">Pick and choose. Your choice</p>
             <h2 className="text-3xl md:text-4xl font-serif">
@@ -103,7 +104,7 @@ export default function HomePage() {
         </section>
       )}
       {!isLoadingVisible && (
-        <section className="flex flex-col justify-center items-center bg-[#05252a] text-slate-200">
+        <section className="flex flex-col justify-center items-center bg-[#0c434b] text-slate-200">
           <div className="px-14 py-24 text-center">
             <h2 className="text-3xl md:text-4xl font-serif">
               Be a writer. <span className="text-green-300">Engage</span> your
@@ -150,7 +151,7 @@ export default function HomePage() {
         </section>
       )}
       {!isLoadingVisible && (
-        <section className="flex flex-col bg-gradient-to-r from-[#020831] to-[#1d0303] items-center">
+        <section className="flex flex-col bg-gradient-to-tr from-[#020831] to-[#300404] items-center">
           <div className="px-24 py-24 text-center">
             <p className="text-gray-400 mb-4">Connect with your audience</p>
             <h2 className="text-3xl md:text-4xl font-serif">

@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import splashImage1 from "../assets/splash1.svg";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { useToast } from "@chakra-ui/react";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   const navigate = useNavigate();
 
@@ -19,16 +21,33 @@ export default function SignUpPage() {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       // Extract user ID from the user object to use for routing
       const userID = user.user.uid;
-      navigate(`/profiles/${userID}`);
+      navigate(`/profiles/${userID}/settings`);
 
       console.log("User", user);
       console.log("UserID", userID);
     } catch (error: any) {
       // If existing account exists, display alert message. Otherwise, display generic error message
-      error.code === "auth/email-already-in-use"
-        ? alert("Email address already in use")
-        : alert("An error occurred. Please try again later.");
-      console.log(error.code);
+      if (error.code === "auth/email-already-in-use") {
+        console.log(error.code);
+        toast({
+          title: "Account already exists",
+          description: "Please use another email address",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          variant: "solid",
+        });
+      } else {
+        console.log(error.code);
+        toast({
+          title: "An error occurred",
+          description: "Please try again later.",
+          status: "error",
+          isClosable: true,
+          duration: 3000,
+          variant: "solid",
+        });
+      }
     }
     setEmail("");
     setPassword("");
@@ -36,7 +55,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8 bg-slate-800">
+    <div className="flex h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8 bg-gradient-to-r from-[#2e103a] to-[#190322]">
       <img src={splashImage1} alt="Splash of color" width="150" />
       <div>
         <h2 className="text-center text-2xl font-bold mt-4">
@@ -58,11 +77,11 @@ export default function SignUpPage() {
                 value={email}
                 autoComplete="email"
                 required
-                disabled={isLoading === true}
+                disabled={isLoading}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="johndoe@gmail.com"
-                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
-                  isLoading === true ? "opacity-20 cursor-not-allowed" : ""
+                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
+                  isLoading ? "opacity-20 cursor-not-allowed" : ""
                 }`}
               />
             </div>
@@ -93,10 +112,10 @@ export default function SignUpPage() {
                 placeholder="Enter your password"
                 autoComplete="current-password"
                 required
-                disabled={isLoading === true}
+                disabled={isLoading}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
-                  isLoading === true ? "opacity-20 cursor-not-allowed" : ""
+                className={`block w-full rounded-md border-0 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 px-4 py-2 bg-white text-black ${
+                  isLoading ? "opacity-20 cursor-not-allowed" : ""
                 }`}
               />
             </div>
@@ -104,24 +123,23 @@ export default function SignUpPage() {
           <div>
             <button
               type="submit"
-              className={`mt-8 flex w-full justify-center rounded-md bg-slate-600 px-3 font-semibold py-2 text-white hover:bg-slate-700 transition-all ${
-                isLoading === true
-                  ? "opacity-50 hover:bg-transparent hover:bg-slate-600 cursor-not-allowed"
-                  : ""
+              disabled={isLoading}
+              className={`mt-8 flex w-full justify-center rounded-md bg-[#5e167c] hover:bg-[#4e0f68] px-3 font-semibold py-2 text-white  transition-all ${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
               Create account
             </button>
             <button
-              className={`mt-6 flex w-full justify-center rounded-md border-2 border-slate-600 hover:border-slate-400 px-3 font-semibold py-2 text-white transition-all ${
-                isLoading === true
-                  ? "opacity-50 hover:border-slate-600 cursor-not-allowed"
-                  : ""
+              className={`mt-6 flex w-full justify-center rounded-md border-2 border-slate-600 px-3 font-semibold py-2 text-white transition-all ${
+                isLoading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:border-slate-400"
               }`}
               onClick={() => navigate("/signin")}
-              disabled={isLoading === true}
+              disabled={isLoading}
             >
-              Login 
+              Login
             </button>
           </div>
         </form>

@@ -10,6 +10,7 @@ import SignUpPage from "./pages/SignupPage";
 import ErrorPage from "./pages/ErrorPage";
 import ExplorePage from "./pages/ExplorePage";
 import NavBar from "./components/NavBar";
+import AdvancedEditor from "./components/AdvancedEditor";
 import SettingsPage from "./pages/SettingsPage";
 import { ChakraProvider } from "@chakra-ui/react";
 
@@ -48,6 +49,11 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element: <SignInPage />,
+  },
+  // Add /write - temporary path for the purpose of setting up Editor component
+  {
+    path: "/write",
+    element: <AdvancedEditor />,
   },
 ]);
 

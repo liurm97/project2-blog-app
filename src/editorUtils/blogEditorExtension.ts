@@ -29,9 +29,7 @@ const tiptapImage = TiptapImage.extend({
   addProseMirrorPlugins() {
     return [
       UploadImagesPlugin({
-        imageClass: cx(
-          "opacity-40 rounded-lg border border-stone-200 max-w-52"
-        ),
+        imageClass: cx("opacity-40 rounded-lg border border-stone-200"),
       }),
     ];
   },
@@ -44,13 +42,13 @@ const tiptapImage = TiptapImage.extend({
 
 const updatedImage = UpdatedImage.configure({
   HTMLAttributes: {
-    class: cx("rounded-lg border border-muted"),
+    class: cx("rounded-lg border border-muted max-w-full min-w-24"),
   },
 });
 
 const taskList = TaskList.configure({
   HTMLAttributes: {
-    class: cx("not-prose pl-2 "),
+    class: cx("not-prose pl-2"),
   },
 });
 const taskItem = TaskItem.configure({
@@ -69,17 +67,17 @@ const horizontalRule = HorizontalRule.configure({
 const starterKit = StarterKit.configure({
   bulletList: {
     HTMLAttributes: {
-      class: cx("list-disc list-outside leading-3 -mt-2"),
+      class: cx("list-disc list-outside leading-3 -mt-2 pl-6 mb-2"),
     },
   },
   orderedList: {
     HTMLAttributes: {
-      class: cx("list-decimal list-outside leading-3 -mt-2"),
+      class: cx("list-decimal list-outside leading-3 -mt-2 pl-6"),
     },
   },
   listItem: {
     HTMLAttributes: {
-      class: cx("leading-normal -mb-2"),
+      class: cx("leading-normal -mb-1"),
     },
   },
   blockquote: {

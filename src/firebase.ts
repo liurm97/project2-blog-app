@@ -1,6 +1,8 @@
 // Import the functions from the SDKs
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_SOME_API_KEY,
@@ -19,7 +21,6 @@ const firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
 
 // PLACEHOLDERS TO USE REALTIME DB & STORAGE
-// import { getDatabase } from "firebase/database";
-// import { getStorage } from "firebase/storage";
-// export const database = getDatabase(firebaseApp);
-// export const storage = getStorage(firebaseApp);
+
+export const database = getDatabase(firebaseApp);
+export const storage = getStorage(firebaseApp);

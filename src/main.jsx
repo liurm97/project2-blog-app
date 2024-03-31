@@ -10,9 +10,9 @@ import SignUpPage from "./pages/SignupPage";
 import ErrorPage from "./pages/ErrorPage";
 import ExplorePage from "./pages/ExplorePage";
 import NavBar from "./components/NavBar";
-import AdvancedEditor from "./components/AdvancedEditor";
 import SettingsPage from "./pages/SettingsPage";
 import { ChakraProvider } from "@chakra-ui/react";
+import AdvancedEditor from "./components/AdvancedEditor";
 
 const router = createBrowserRouter([
   {
@@ -29,15 +29,15 @@ const router = createBrowserRouter([
         element: <ExplorePage />,
       },
       {
-        path: "/profiles/:bloggerName",
+        path: "/profiles/:bloggerId",
         element: <ProfilePage />,
       },
       {
-        path: "/profiles/:bloggerName/settings",
+        path: "/profiles/:bloggerId/settings",
         element: <SettingsPage />,
       },
       {
-        path: "/profiles/:bloggerName/posts/:postTitle",
+        path: "/profiles/:bloggerId/posts/:postTitle",
         element: <Post />,
       },
     ],
@@ -50,9 +50,8 @@ const router = createBrowserRouter([
     path: "/signin",
     element: <SignInPage />,
   },
-  // Add /write - temporary path for the purpose of setting up Editor component
   {
-    path: "/write",
+    path: "/profiles/:bloggerId/write",
     element: <AdvancedEditor />,
   },
 ]);

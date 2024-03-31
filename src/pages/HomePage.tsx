@@ -10,7 +10,6 @@ import analyticsImage from "../assets/analytics.png";
 import customizeImage from "../assets/customize.png";
 import BlogEditor from "../components/BlogEditor";
 import AdvancedEditor from "../components/AdvancedEditor";
-import { TextButtons } from "../components/TextButton";
 
 export default function HomePage() {
   const isFirstVisit = sessionStorage.getItem("isFirstVisit");

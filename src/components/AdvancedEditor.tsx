@@ -13,7 +13,8 @@ import {
   EditorCommandList,
 } from "novel";
 import { ImageResizer, handleCommandNavigation } from "novel/extensions";
-import { BlogEditorExtension } from "../editorUtils/BlogEditorExtension";
+import { blogEditorExtension } from "../editorUtils/blogEditorExtension";
+
 // import { Separator } from "./ui/separator";
 // import { NodeSelector } from "./selectors/node-selector";
 // import { LinkSelector } from "./selectors/link-selector";
@@ -26,7 +27,7 @@ import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "../editorUtils/image-upload";
 import { useEditor } from "@tiptap/react";
 // const extensions = [...BlogEditorExtension, slashCommand];
-const extensions = [...BlogEditorExtension, slashCommand];
+const extensions = [...blogEditorExtension, slashCommand];
 
 const AdvancedEditor = () => {
   const [initialContent, setInitialContent] = useState<null | JSONContent>(

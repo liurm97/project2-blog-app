@@ -108,7 +108,7 @@ const starterKit = StarterKit.configure({
   gapcursor: false,
 });
 
-export const BlogEditorExtension = [
+export const blogEditorExtension = [
   starterKit,
   placeholder,
   tiptapLink,

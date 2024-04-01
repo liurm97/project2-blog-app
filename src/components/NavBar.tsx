@@ -16,37 +16,67 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="py-6 px-24 flex justify-between items-center fixed w-full backdrop-blur-sm z-1">
-        <NavLink to={`/`} className="text-white hover:text-white">
-          Home
-        </NavLink>
-        <div className="flex items-center">
-          <NavLink
-            to={`/explore`}
-            className={({ isActive }) => {
-              return isActive
-                ? `mr-12 px-2 py-3 text-white hover:text-white`
-                : "mr-12 px-2 py-3 text-gray-400 hover:text-white transition-all";
-            }}
-            caseSensitive
-          >
-            Explore
+      <nav
+        className={`py-6 px-24 fixed flex top-0 ${
+          isLoggedIn ? "justify-end" : "justify-between backdrop-blur-sm z-1"
+        } items-center w-full z-1`}
+      >
+        {!isLoggedIn && (
+          <NavLink to={`/`} className="text-white hover:text-white">
+            Home
           </NavLink>
-          {!isLoggedIn && (
+        )}
+        <div className="flex items-center gap-4">
+          {isLoggedIn ? (
+            <NavLink
+              to={`/profiles/${auth.currentUser.uid}/dashboard`}
+              className={({ isActive }) => {
+                return isActive
+                  ? `px-2 py-3 text-white hover:text-white`
+                  : "px-2 py-3 text-gray-400 hover:text-white transition-all";
+              }}
+            >
+              Dashboard
+            </NavLink>
+          ) : (
+            <NavLink
+              to={`/explore`}
+              className={({ isActive }) => {
+                return isActive
+                  ? `px-2 py-3 text-white hover:text-white`
+                  : "px-2 py-3 text-gray-400 hover:text-white transition-all";
+              }}
+              caseSensitive
+            >
+              Explore
+            </NavLink>
+          )}
+          {!isLoggedIn ? (
             <NavLink
               to={`/signin`}
               className={({ isActive }) => {
                 return isActive
-                  ? `mr-12 px-2 py-3 text-white hover:text-white`
-                  : "mr-12 px-2 py-3 text-gray-400 hover:text-white transition-all";
+                  ? `px-2 py-3 text-white hover:text-white`
+                  : "px-2 py-3 text-gray-400 hover:text-white transition-all";
               }}
             >
               Login
             </NavLink>
+          ) : (
+            <NavLink
+              to={`/profiles/${auth.currentUser.uid}/settings`}
+              className={({ isActive }) => {
+                return isActive
+                  ? `px-2 py-3 text-white hover:text-white`
+                  : "px-2 py-3 text-gray-400 hover:text-white transition-all";
+              }}
+            >
+              Settings
+            </NavLink>
           )}
           {!isLoggedIn && (
             <button
-              className="rounded-md bg-[#5e167c] hover:bg-[#4e0f68] px-6 py-3 font-medium  transition-all"
+              className="rounded-md bg-[#5e167c] hover:bg-[#4e0f68] px-4 py-3 font-medium  transition-all"
               onClick={() => navigate("/signup")}
             >
               Start writing
@@ -54,7 +84,7 @@ const NavBar = () => {
           )}
           {isLoggedIn && (
             <button
-              className="mr-12 font-medium"
+              className="font-medium text-gray-400 hover:text-white"
               onClick={() => {
                 signOut(auth);
                 navigate("/");
@@ -63,7 +93,9 @@ const NavBar = () => {
               Logout{" "}
             </button>
           )}
-          {isLoggedIn && <Avatar name={auth.currentUser.displayName} />}
+          {isLoggedIn && (
+            <Avatar className="ml-2" name={auth.currentUser.displayName} />
+          )}
         </div>
       </nav>
       <Outlet />

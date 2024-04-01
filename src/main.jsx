@@ -9,9 +9,9 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignupPage";
 import ErrorPage from "./pages/ErrorPage";
 import ExplorePage from "./pages/ExplorePage";
-import NavBar from "./components/NavBar";
 import SettingsPage from "./pages/SettingsPage";
 import { ChakraProvider } from "@chakra-ui/react";
+import NavBar from "./components/NavBar";
 
 const router = createBrowserRouter([
   {
@@ -28,15 +28,15 @@ const router = createBrowserRouter([
         element: <ExplorePage />,
       },
       {
-        path: "/profiles/:bloggerName",
+        path: "/profiles/:bloggerId/dashboard",
         element: <ProfilePage />,
       },
       {
-        path: "/profiles/:bloggerName/settings",
+        path: "/profiles/:bloggerId/settings",
         element: <SettingsPage />,
       },
       {
-        path: "/profiles/:bloggerName/posts/:postTitle",
+        path: "/profiles/:bloggerId/posts/:postTitle",
         element: <Post />,
       },
     ],

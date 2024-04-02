@@ -18,8 +18,7 @@ export default function ProfilePage() {
       await updateProfile(auth.currentUser, {
         displayName: `${firstName} ${lastName}`,
       });
-      auth.currentUser.displayName = `${firstName} ${lastName}`;
-      navigate(`/profiles/${auth.currentUser.displayName}`);
+      navigate(`/profiles/${auth.currentUser.uid}/dashboard`);
     } catch (error: any) {
       toast({
         title: "An error occurred",
@@ -36,7 +35,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex pt-24 h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8">
+    <div className="flex h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8">
       <div>
         <h2 className="text-center text-2xl font-bold mt-4">
           You're signed up! Tell us your name

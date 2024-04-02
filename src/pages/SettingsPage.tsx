@@ -18,8 +18,7 @@ export default function ProfilePage() {
       await updateProfile(auth.currentUser, {
         displayName: `${firstName} ${lastName}`,
       });
-      auth.currentUser.displayName = `${firstName} ${lastName}`;
-      navigate(`/profiles/${auth.currentUser.displayName}`);
+      navigate(`/profiles/${auth.currentUser.uid}/dashboard`);
     } catch (error: any) {
       toast({
         title: "An error occurred",

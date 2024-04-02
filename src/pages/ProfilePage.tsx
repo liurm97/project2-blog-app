@@ -3,7 +3,18 @@
 // import { useNavigate } from "react-router-dom";
 import { AddIcon, PlusSquareIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import DashboardPost from "../components/DashboardPost";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  ref,
+  updateMetadata,
+  uploadString,
+  getStorage,
+  getDownloadURL,
+} from "firebase/storage";
+import { storage, database } from "../firebase";
 
 const dummyData = [
   {
@@ -29,7 +40,32 @@ const dummyData = [
 export default function ProfilePage() {
   const currentDashboardState = dummyData.length > 0 ? "hasPosts" : "noPosts";
   const [dashboardState, setDashboardState] = useState(currentDashboardState); // states: hasPosts, noPosts, edit
+// import AdvancedEditor from "../components/AdvancedEditor";
 
+  const [blogPosts, setBlogPosts] = useState([]);
+  const navigate = useNavigate();
+  const { bloggerId } = useParams();
+
+  // const getEditorContent = async () => {
+  //   const bloggerIdRef = ref(storage, `bloggers/${bloggerId}`);
+  //   console.log("getting url");
+  //   const url = await getDownloadURL(bloggerIdRef);
+
+  //   const xhr = new XMLHttpRequest();
+  //   // xhr.responseType = 'blob';
+  //   xhr.onload = (event) => {
+  //     const blob = xhr.response;
+  //     console.log("blob", blob);
+  //     setBlogPosts(blob);
+  //   };
+  //   xhr.open("GET", url);
+  //   xhr.send();
+  //   console.log("blog HTML uploaded");
+  // };
+
+  useEffect(() => {
+    // getEditorContent();
+  }, []);
   return (
     <div className="flex flex-col h-screen">
       <div className="flex-grow flex flex-col gap-4 mt-24 px-24">
@@ -78,6 +114,22 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
+    {/* <div className="p-14">
+      <button
+        className="mt-10 border-2 rounded-md p-2"
+        onClick={() => {
+          signOut(auth);
+          navigate("/");
+        }}
+      >
+        Logout
+      </button> */}
+
+      {/* <button></button> */}
+      {/* <div
+        className={"bg-[#2e1139] p-4"}
+        dangerouslySetInnerHTML={{ __html: blogPosts }}
+      ></div> */}
     </div>
   );
 }

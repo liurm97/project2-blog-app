@@ -2,11 +2,11 @@ export const testContent = {
   type: "doc",
   content: [
     {
-      type: "paragraph",
+      type: "heading",
       content: [
         {
           type: "text",
-          text: "Tiptap",
+          text: "Heading",
         },
       ],
     },

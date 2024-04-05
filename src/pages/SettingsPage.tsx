@@ -9,7 +9,7 @@ export default function ProfilePage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const toast = useToast();
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
 
   const saveName = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

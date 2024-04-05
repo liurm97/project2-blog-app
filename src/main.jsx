@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       {
         path: "/profiles/:bloggerId/dashboard",
         element: (
-          <ProtectedRoutes role="reader">
+          <ProtectedRoutes role="writer">
             <ProfilePage />
           </ProtectedRoutes>
         ),
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       {
         path: "/profiles/:bloggerId/settings",
         element: (
-          <ProtectedRoutes role="reader">
+          <ProtectedRoutes role="writer">
             <SettingsPage />
           </ProtectedRoutes>
         ),

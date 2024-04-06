@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_SOME_API_KEY,
@@ -23,4 +24,5 @@ export const auth = getAuth(firebaseApp);
 // PLACEHOLDERS TO USE REALTIME DB & STORAGE
 
 export const database = getDatabase(firebaseApp);
+export const firestore = getFirestore(firebaseApp);
 export const storage = getStorage(firebaseApp);

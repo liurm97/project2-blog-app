@@ -33,11 +33,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/profiles/:bloggerId/settings",
-        path: "/profiles/:bloggerId/settings",
         element: <SettingsPage />,
       },
       {
-        path: "/profiles/:bloggerId/posts/:postTitle",
         path: "/profiles/:bloggerId/posts/:postTitle",
         element: <Post />,
       },
@@ -50,10 +48,6 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element: <SignInPage />,
-  },
-  {
-    path: "/profiles/:bloggerId/write",
-    element: <AdvancedEditor />,
   },
 ]);
 

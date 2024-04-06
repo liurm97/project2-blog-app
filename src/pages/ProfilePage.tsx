@@ -30,19 +30,21 @@ export default function ProfilePage() {
   // console.log(dashboardState);
   const navigate = useNavigate();
   const { bloggerId } = useParams();
-
+  console.log(dashboardState);
   useEffect(() => {
     const execute = async () => {
       const blogs = await getBlogs(bloggerId!);
       if (blogs !== null) setBlogPosts(blogs);
     };
-    execute();
+    if (dashboardState !== "create" && dashboardState !== "edit") execute();
     dashboardState === "edit" || dashboardState === "create"
       ? ""
       : blogPosts.length > 0
       ? setDashboardState("hasPosts")
       : setDashboardState("noPosts");
-  }, []);
+    //=================================== TODO =============================
+    //*** For Bobby to think of a way to prevent many many calls....
+  }, [blogPosts]);
 
   // const getEditorContent = async () => {
   //   const bloggerIdRef = ref(storage, `bloggers/${bloggerId}`);

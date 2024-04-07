@@ -8,6 +8,7 @@ import ambienceImage from "../assets/ambience.png";
 import pollImage from "../assets/poll.png";
 import analyticsImage from "../assets/analytics.png";
 import customizeImage from "../assets/customize.png";
+import BlogEditor from "../components/BlogEditor";
 
 export default function HomePage() {
   const isFirstVisit = sessionStorage.getItem("isFirstVisit");

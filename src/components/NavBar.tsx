@@ -29,7 +29,7 @@ const NavBar = () => {
         <div className="flex items-center gap-4">
           {isLoggedIn ? (
             <NavLink
-              to={`/profiles/${auth.currentUser.uid}/dashboard`}
+              to={`/profiles/${auth.currentUser!.uid}/dashboard`}
               className={({ isActive }) => {
                 return isActive
                   ? `px-2 py-3 text-white hover:text-white`
@@ -64,7 +64,7 @@ const NavBar = () => {
             </NavLink>
           ) : (
             <NavLink
-              to={`/profiles/${auth.currentUser.uid}/settings`}
+              to={`/profiles/${auth.currentUser!.uid}/settings`}
               className={({ isActive }) => {
                 return isActive
                   ? `px-2 py-3 text-white hover:text-white`
@@ -94,7 +94,7 @@ const NavBar = () => {
             </button>
           )}
           {isLoggedIn && (
-            <Avatar className="ml-2" name={auth.currentUser.displayName} />
+            <Avatar className="ml-2" name={auth.currentUser!.displayName} />
           )}
         </div>
       </nav>

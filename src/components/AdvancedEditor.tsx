@@ -232,7 +232,7 @@ const AdvancedEditor = ({
               draftDate,
               ""
             );
-            updateDashBoardState("hasPosts");
+            updateDashBoardState("");
           }}
         >
           Save Draft
@@ -253,7 +253,7 @@ const AdvancedEditor = ({
               "",
               publishedDate
             );
-            updateDashBoardState("hasPosts");
+            updateDashBoardState("");
           }}
         >
           Publish

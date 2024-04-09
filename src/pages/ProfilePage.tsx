@@ -1,6 +1,3 @@
-// import { signOut } from "firebase/auth";
-// import { auth } from "../firebase";
-// import { useNavigate } from "react-router-dom";
 import { AddIcon, PlusSquareIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import DashboardPost from "../components/DashboardPost";
 import { useState, useEffect } from "react";
@@ -9,6 +6,11 @@ import AdvancedEditor from "../components/AdvancedEditor";
 import { getBlogs } from "../editorUtils/getBlogs";
 
 export default function ProfilePage() {
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [dashboardState, setDashboardState] = useState<string>(""); // states: "", edit, create
+  const navigate = useNavigate();
+  const { bloggerId } = useParams();
+
   const updateDashBoardState = (newState: string): void => {
     setDashboardState(newState);
   };
@@ -19,32 +21,27 @@ export default function ProfilePage() {
       (currentBlog: any) => currentBlog.id != postId
     );
     if (remainingBlog.length == 0) {
-      setDashboardState("noPosts");
       setBlogPosts([]);
     } else return setBlogPosts([...remainingBlog]);
   };
 
-  const [blogPosts, setBlogPosts] = useState([]);
-  // let currentDashboardState = "" //default to noPosts
-  const [dashboardState, setDashboardState] = useState(""); // states: hasPosts, noPosts, edit
-  // console.log(dashboardState);
-  const navigate = useNavigate();
-  const { bloggerId } = useParams();
-  console.log(dashboardState);
   useEffect(() => {
     const execute = async () => {
       const blogs = await getBlogs(bloggerId!);
-      if (blogs !== null) setBlogPosts(blogs);
+      if (blogs.length > 0) {
+        if (dashboardState === "") {
+          setBlogPosts(blogs);
+        }
+      } else {
+        if (dashboardState === "") {
+          setBlogPosts(blogs);
+        }
+      }
     };
-    if (dashboardState !== "create" && dashboardState !== "edit") execute();
-    dashboardState === "edit" || dashboardState === "create"
-      ? ""
-      : blogPosts.length > 0
-      ? setDashboardState("hasPosts")
-      : setDashboardState("noPosts");
+    execute();
     //=================================== TODO =============================
     //*** For Bobby to think of a way to prevent many many calls....
-  }, [blogPosts]);
+  }, [dashboardState]);
 
   // const getEditorContent = async () => {
   //   const bloggerIdRef = ref(storage, `bloggers/${bloggerId}`);
@@ -77,9 +74,7 @@ export default function ProfilePage() {
               <button
                 className="rounded-md flex items-center gap-2 px-4 py-3 text-md text-gray-400"
                 onClick={() => {
-                  blogPosts.length > 0
-                    ? setDashboardState("hasPosts")
-                    : setDashboardState("noPosts");
+                  setDashboardState("");
                 }}
               >
                 <ArrowBackIcon boxSize={4} />
@@ -99,7 +94,7 @@ export default function ProfilePage() {
             </div>
           </div>
         )}
-        {dashboardState !== "create" && dashboardState !== "edit" && (
+        {dashboardState === "" && (
           <div className="flex justify-between items-center mt-4">
             <p className="text-md text-gray-400">{`Posts (${blogPosts.length})`}</p>
             <button
@@ -111,7 +106,7 @@ export default function ProfilePage() {
             </button>{" "}
           </div>
         )}
-        {dashboardState === "hasPosts" && (
+        {blogPosts.length > 0 && dashboardState == "" && (
           <div className="flex flex-col">
             {blogPosts.map(({ title, status, tags, publishedDate, id }) => {
               return (
@@ -130,7 +125,7 @@ export default function ProfilePage() {
             })}
           </div>
         )}
-        {dashboardState === "noPosts" && (
+        {blogPosts.length === 0 && dashboardState == "" && (
           <div className="flex flex-col justify-center flex-grow items-center border-2 border-gray-800 rounded-lg mt-6 mb-10 text-gray-600">
             <PlusSquareIcon boxSize={8} className="mb-4" color="gray.700" />
             <p>Write your first post!</p>

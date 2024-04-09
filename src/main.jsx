@@ -12,6 +12,7 @@ import ExplorePage from "./pages/ExplorePage";
 import SettingsPage from "./pages/SettingsPage";
 import { ChakraProvider } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 const router = createBrowserRouter([
   {
@@ -29,11 +30,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/profiles/:bloggerId/dashboard",
-        element: <ProfilePage />,
+        element: (
+          <ProtectedRoutes role="writer">
+            <ProfilePage />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/profiles/:bloggerId/settings",
-        element: <SettingsPage />,
+        element: (
+          <ProtectedRoutes role="writer">
+            <SettingsPage />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/profiles/:bloggerId/posts/:postTitle",

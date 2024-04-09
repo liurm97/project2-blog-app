@@ -5,12 +5,13 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useToast } from "@chakra-ui/react";
 
+
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
-
+  
   const navigate = useNavigate();
 
   const signUp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -19,12 +20,16 @@ export default function SignUpPage() {
     try {
       // Create a new user with the credentials entered by the user
       const user = await createUserWithEmailAndPassword(auth, email, password);
-      // Extract user ID from the user object to use for routing
+      // Extract user ID from the user object to use for routing and claims
       const userID = user.user.uid;
+      // Set writer privilege on the current user
+      auth.setCustomUserClaims(userID, { writer: true });
+      console.log("Before token refresh", user);
+      // Force refresh ID token to pick up the latest custom claims changes
+      // getAuth().currentUser.getIdToken(true);
       navigate(`/profiles/${userID}/settings`);
-
-      console.log("User", user);
-      console.log("UserID", userID);
+      // console.log("After token refresh", user);
+      // console.log("User", user);
     } catch (error: any) {
       // If existing account exists, display alert message. Otherwise, display generic error message
       if (error.code === "auth/email-already-in-use") {

@@ -29,12 +29,15 @@ import { MultiSelector } from "./MultiSelector";
 import { slashCommand, suggestionItems } from "./slashCommands";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { useEditor } from "@tiptap/react";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import { set } from "firebase/database";
 import { ref, updateMetadata, uploadString } from "firebase/storage";
 import { storage, database } from "../firebase";
 // import { BlogEditorHeader } from "./BlogEditorHeader";
 import { saveBlog } from "../editorUtils/saveBlog";
+import { postType } from "../types/postType";
+import { getBlogMetadata } from "../editorUtils/getBlogMetadata";
+import { updateBlog } from "../editorUtils/updateBlog";
 
 type updateDashBoardStateFunctionType = (state: string) => void;
 
@@ -44,52 +47,76 @@ const extensions = [...blogEditorExtension, slashCommand];
 const AdvancedEditor = ({
   updateDashBoardState,
   dashboardState,
+  editBloggerId,
+  editPostId,
 }: {
   updateDashBoardState: updateDashBoardStateFunctionType;
   dashboardState: string;
+  editBloggerId?: string;
+  editPostId?: string;
 }) => {
   // get bloggerID from URL
   const { bloggerId } = useParams();
 
   // create random postID
+  const [postMetadata, setPostMetadata] = useState<postType | undefined>(
+    undefined
+  );
+  if (postMetadata) console.log("jsonContent", postMetadata!["jsonContent"]);
+
   const [postId, setPostId] = useState<string | null>(null);
   const [htmlPost, setHtmlPost] = useState<string | null>(null);
   const [jsonPost, setJsonPost] = useState<JSONContent | null>(null);
-
-  useEffect(() => {
-    setPostId(crypto.randomUUID().toString());
-  }, []);
-
-  // set initial post content and disable automaticSave status update as this is a create
-  const [initialContent, setInitialContent] = useState<null | JSONContent>(
-    null
-  );
-  // const [saveStatus, setSaveStatus] = useState("Saved");
-
-  // const saveEditorContent = async (content: string) => {
-  //   // const postId = crypto.randomUUID();
-
-  //   // For Demo
-  //   const bloggerIdRef = ref(storage, `bloggers/${bloggerId}`);
-  //   // To use this to save multiple posts per blogger
-  //   // const bloggerIdRef = ref(storage, `bloggers/${bloggerId}/${postId}`);
-
-  //   // 3. upload image to temporary FireStore Storage
-  //   await uploadString(bloggerIdRef, content);
-
-  //   console.log("blog HTML uploaded");
-  // };
 
   // State for Title, Readtime, Tags
   const addTags = (newTagValue: string) => {
     setSelectedTags([...selectedTags, newTagValue]);
   };
-  const removeTags = (tagToRemove: string) => {
+  const removeTags = (tagToRemove: any) => {
     setSelectedTags(selectedTags.filter((val: string) => val !== tagToRemove));
   };
   const [title, setTitle] = useState<string>("");
   const [readTime, setReadTime] = useState<string>("");
   const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
+
+  useEffect(() => {
+    // post Id
+    setPostId(crypto.randomUUID().toString());
+
+    const executeGetMetadata = async () => {
+      const postMetadata = await getBlogMetadata(editBloggerId!, editPostId!);
+      if (dashboardState == "edit") {
+        if (postMetadata) {
+          console.log("exec1");
+          setInitialContent(JSON.parse(postMetadata!["jsonContent"]));
+          setJsonPost(JSON.parse(postMetadata!["jsonContent"]));
+        } else {
+          console.log("exec2");
+          setInitialContent({
+            type: "doc",
+            content: [
+              {
+                type: "heading",
+                attrs: { level: 1 },
+                content: [{ type: "text", text: "Untitled" }],
+              },
+            ],
+          });
+        }
+      }
+      setPostMetadata(postMetadata);
+      setTitle(postMetadata!["title"]);
+      setReadTime(postMetadata!["readTime"]);
+      setSelectedTags([...postMetadata!["tags"]]);
+    };
+    if (editBloggerId !== undefined && editPostId !== undefined) {
+      executeGetMetadata();
+    }
+  }, []);
+  // set initial post content and disable automaticSave status update as this is a create
+  const [initialContent, setInitialContent] = useState<null | JSONContent>(
+    null
+  );
 
   const debouncedUpdates = useDebouncedCallback(
     async (editor: EditorInstance) => {
@@ -97,36 +124,14 @@ const AdvancedEditor = ({
       const html = editor.getHTML();
       setHtmlPost(html);
       setJsonPost(json);
-      // console.log(json);
-      // console.log(html);
-      // try {
-      //   await saveEditorContent(html);
-      //   // setSaveStatus("Saved");
-      // } catch (err) {
-      //   console.log(err);
-      // }
-      // const html = editor.getHTML();
-      // console.log(html);
-      // window.localStorage.setItem("novel-content", JSON.stringify(json));
     },
     500
   );
 
   useEffect(() => {
-    // const content = window.localStorage.getItem("novel-content");
-    // if (content) setInitialContent(JSON.parse(content));
-    dashboardState == "create"
-      ? setInitialContent(defaultEditorContent)
-      : setInitialContent({
-          type: "doc",
-          content: [
-            {
-              type: "heading",
-              attrs: { level: 1 },
-              content: [{ type: "text", text: "Untitled" }],
-            },
-          ],
-        });
+    if (dashboardState == "create") {
+      setInitialContent(defaultEditorContent);
+    }
   }, []);
 
   if (!initialContent) return null;
@@ -143,7 +148,6 @@ const AdvancedEditor = ({
             name="title"
             id="title"
             onChange={(e) => {
-              // console.log(e.target.value);
               setTitle(() => e.target.value);
             }}
           />
@@ -157,12 +161,16 @@ const AdvancedEditor = ({
             name="readTime"
             id="readTime"
             onChange={(e) => {
-              console.log(e.target.value);
               setReadTime(() => e.target.value);
             }}
           />
         </div>
-        <MultiSelector addTags={addTags} removeTags={removeTags} />
+        <MultiSelector
+          addTags={addTags}
+          removeTags={removeTags}
+          selectedValues={selectedTags}
+          dashboardState={dashboardState}
+        />
       </div>
       <div className="absolute right-5 top-5 z-0 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
         {/* {saveStatus} */}
@@ -219,20 +227,42 @@ const AdvancedEditor = ({
         <button
           className="border"
           onClick={() => {
-            const draftDate = new Date().toLocaleDateString("sv-SE");
-            saveBlog(
-              bloggerId!,
-              postId!,
-              htmlPost!,
-              jsonPost!,
-              "draft",
-              title,
-              readTime,
-              selectedTags,
-              draftDate,
-              ""
-            );
-            updateDashBoardState("");
+            if (dashboardState == "edit") {
+              console.log("edit state - save draft");
+              // const { content, jsonContent } = {
+              //   ...postMetadata,
+              // };
+              const newDraftDate = new Date().toLocaleDateString("sv-SE");
+              updateBlog(editBloggerId!, editPostId!, {
+                bloggerId: bloggerId,
+                postId: editPostId,
+                content: htmlPost,
+                jsonContent: JSON.stringify(jsonPost),
+                draftDate: newDraftDate,
+                publishedDate: "",
+                title: title,
+                readTime: readTime,
+                tags: selectedTags,
+                status: "draft",
+              }).then(() => {
+                updateDashBoardState("");
+              });
+            } else {
+              const draftDate = new Date().toLocaleDateString("sv-SE");
+              saveBlog(
+                bloggerId!,
+                postId!,
+                htmlPost!,
+                jsonPost!,
+                "draft",
+                title,
+                readTime,
+                selectedTags,
+                draftDate,
+                ""
+              );
+              updateDashBoardState("");
+            }
           }}
         >
           Save Draft
@@ -240,20 +270,38 @@ const AdvancedEditor = ({
         <button
           className="border"
           onClick={() => {
-            const publishedDate = new Date().toLocaleDateString("sv-SE");
-            saveBlog(
-              bloggerId!,
-              postId!,
-              htmlPost!,
-              jsonPost!,
-              "published",
-              title,
-              readTime,
-              selectedTags,
-              "",
-              publishedDate
-            );
-            updateDashBoardState("");
+            if (dashboardState == "edit") {
+              const newPublishedDate = new Date().toLocaleDateString("sv-SE");
+              updateBlog(editBloggerId!, editPostId!, {
+                bloggerId: bloggerId,
+                postId: editPostId,
+                content: htmlPost,
+                jsonContent: JSON.stringify(jsonPost),
+                draftDate: "",
+                publishedDate: newPublishedDate,
+                title: title,
+                readTime: readTime,
+                tags: selectedTags,
+                status: "published",
+              }).then(() => {
+                updateDashBoardState("");
+              });
+            } else {
+              const publishedDate = new Date().toLocaleDateString("sv-SE");
+              saveBlog(
+                bloggerId!,
+                postId!,
+                htmlPost!,
+                jsonPost!,
+                "published",
+                title,
+                readTime,
+                selectedTags,
+                "",
+                publishedDate
+              );
+              updateDashBoardState("");
+            }
           }}
         >
           Publish

@@ -15,6 +15,7 @@ export const saveBlog = async (
 ): Promise<void> => {
   try {
     await setDoc(doc(firestore, bloggerId, postId), {
+      postId: postId,
       content: draftContent,
       jsonContent: JSON.stringify(jsonContent),
       status: status,

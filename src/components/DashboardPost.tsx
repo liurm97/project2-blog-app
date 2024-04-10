@@ -1,5 +1,6 @@
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { deleteBlog } from "../editorUtils/deleteBlog";
+import { getBlogMetadata } from "../editorUtils/getBlogMetadata";
 const DashboardPost = ({
   title,
   status,
@@ -8,6 +9,7 @@ const DashboardPost = ({
   bloggerId,
   postId,
   removeBlog,
+  updateEditPostId,
   updateDashBoardState,
 }: {
   title: string;
@@ -16,6 +18,7 @@ const DashboardPost = ({
   publishDate: string;
   bloggerId: string;
   postId: string;
+  updateEditPostId(newState: string): void;
   removeBlog(postId: string): void;
   updateDashBoardState(newState: string): void;
 }) => {
@@ -53,7 +56,8 @@ const DashboardPost = ({
           className="bg-gray-800 px-3 py-2 pt-1 rounded-md"
           onClick={() => {
             updateDashBoardState("edit");
-            console.log("edit");
+            updateEditPostId(postId);
+            // console.log("editing", postId);
           }}
         >
           <EditIcon boxSize={4} color="gray.400" />

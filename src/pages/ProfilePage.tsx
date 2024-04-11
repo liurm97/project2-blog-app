@@ -1,7 +1,7 @@
 import { AddIcon, PlusSquareIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import DashboardPost from "../components/DashboardPost";
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AdvancedEditor from "../components/AdvancedEditor";
 import { getBlogs } from "../editorUtils/getBlogs";
 
@@ -9,7 +9,6 @@ export default function ProfilePage() {
   const [blogPosts, setBlogPosts] = useState([]);
   const [dashboardState, setDashboardState] = useState<string>(""); // states: "", edit, create
   const [editPostId, setEditPostId] = useState<string>(""); // post id of edit-article
-  const navigate = useNavigate();
   const { bloggerId } = useParams();
 
   const updateEditPostId = (newState: string): void => {
@@ -71,7 +70,7 @@ export default function ProfilePage() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="flex-grow flex flex-col gap-4 mt-24 px-24">
+      <div className="flex-grow flex flex-col gap-4 mt-24 px-16">
         {/* Create */}
         {dashboardState === "create" && (
           <div>

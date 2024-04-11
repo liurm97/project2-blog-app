@@ -17,7 +17,7 @@ const NavBar = () => {
   return (
     <>
       <nav
-        className={`py-6 px-24 fixed flex top-0 ${
+        className={`py-6 px-16 fixed flex top-0 ${
           isLoggedIn ? "justify-end" : "justify-between backdrop-blur-sm z-1"
         } items-center w-full z-1`}
       >

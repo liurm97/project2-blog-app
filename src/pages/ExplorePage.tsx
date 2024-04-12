@@ -37,19 +37,25 @@ export default function ExplorePage() {
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-950">
       <div className="pt-32 pb-24 px-16 max-w-7xl">
-        <p className="text-sm md:text-md font-semibold tracking-wider mb-12 text-violet-300 uppercase">Trending Posts</p>
+        <p className="text-sm md:text-md font-semibold tracking-wider mb-12 text-violet-300 uppercase">
+          Trending Posts
+        </p>
         <section className="flex flex-col md:grid md:grid-cols-2 md:gap-24">
           {dummyData.map((post) => {
             return (
               <div className="mb-12 md:mb-0">
+                {/* Replace with blogger name, post title, publishedDate, readTime here */}
                 <p className="font-medium text-gray-400">{post.author}</p>
-                <p className="text-2xl md:text-4xl leading-snug">{post.title}</p>
+                <p className="text-2xl md:text-4xl leading-snug">
+                  {post.title}
+                </p>
                 <p className="text-gray-400 mt-2">
                   {post.publishedDate}
                   {" • "}
                   {post.readingTime} min read
                 </p>
                 <div className="mt-4">
+                  {/* Replace with category tags here */}
                   {post.tags.map((tag) => {
                     return (
                       <span className="text-xs bg-gray-800 text-gray-400 rounded-full px-3 py-1 mr-2">

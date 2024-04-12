@@ -23,7 +23,7 @@ export default function SignUpPage() {
       // Extract user ID from the user object to use for routing and claims
       const userID = user.user.uid;
       // Set writer privilege on the current user
-      auth.setCustomUserClaims(userID, { writer: true });
+      // auth.setCustomUserClaims(userID, { writer: true });
       console.log("Before token refresh", user);
       // Force refresh ID token to pick up the latest custom claims changes
       // getAuth().currentUser.getIdToken(true);

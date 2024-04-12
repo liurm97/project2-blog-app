@@ -1,6 +1,5 @@
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { deleteBlog } from "../editorUtils/deleteBlog";
-import { getBlogMetadata } from "../editorUtils/getBlogMetadata";
 const DashboardPost = ({
   title,
   status,
@@ -23,7 +22,7 @@ const DashboardPost = ({
   updateDashBoardState(newState: string): void;
 }) => {
   const statusColor =
-    status === "Published"
+    status === "published"
       ? "bg-green-600 text-green-200"
       : "bg-violet-700 text-violet-200";
 

@@ -43,7 +43,10 @@ export default function ExplorePage() {
         <section className="flex flex-col md:grid md:grid-cols-2 md:gap-24">
           {dummyData.map((post) => {
             return (
-              <div className="mb-12 md:mb-0">
+              <div
+                className="mb-12 md:mb-0"
+                onClick={() => console.log("clicked")}
+              >
                 {/* Replace with blogger name, post title, publishedDate, readTime here */}
                 <p className="font-medium text-gray-400">{post.author}</p>
                 <p className="text-2xl md:text-4xl leading-snug">

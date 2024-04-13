@@ -13,6 +13,7 @@ import SettingsPage from "./pages/SettingsPage";
 import { ChakraProvider } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import UnauthorizedErrorPage from "./pages/UnauthorizedErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       {
         path: "/profiles/:bloggerId/dashboard",
         element: (
-          <ProtectedRoutes role="writer">
+          <ProtectedRoutes>
             <ProfilePage />
           </ProtectedRoutes>
         ),
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
       {
         path: "/profiles/:bloggerId/settings",
         element: (
-          <ProtectedRoutes role="writer">
+          <ProtectedRoutes>
             <SettingsPage />
           </ProtectedRoutes>
         ),
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element: <SignInPage />,
+  },
+  {
+    path: "/unauthorized",
+    element: <UnauthorizedErrorPage />,
   },
 ]);
 

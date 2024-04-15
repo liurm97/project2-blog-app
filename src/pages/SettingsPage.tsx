@@ -9,7 +9,7 @@ export default function ProfilePage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const toast = useToast();
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const saveName = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ export default function ProfilePage() {
     <div className="flex h-screen flex-1 flex-col justify-center items-center px-6 lg:px-8">
       <div>
         <h2 className="text-center text-2xl font-bold mt-4">
-          You're signed up! Tell us your name
+          Tell us your name
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -87,10 +87,8 @@ export default function ProfilePage() {
             <button
               disabled={isLoading}
               type="submit"
-              className={`mt-10 flex w-full justify-center rounded-md bg-teal-600 px-3 font-semibold py-2 text-white transition-all ${
-                isLoading === true
-                  ? "opacity-50 hover:bg-teal-600 cursor-not-allowed"
-                  : "hover:bg-teal-700"
+              className={`mt-12 flex w-full justify-center rounded-md bg-[#5e167c] hover:bg-[#4e0f68] px-3 font-semibold py-2 text-white transition-all ${
+                isLoading ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
               Confirm

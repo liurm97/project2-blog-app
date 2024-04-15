@@ -76,7 +76,7 @@ const NavBar = () => {
           )}
           {!isLoggedIn && (
             <button
-              className="rounded-md bg-[#5e167c] hover:bg-[#4e0f68] px-4 py-3 font-medium  transition-all"
+              className="rounded-md bg-[#5e167c] hover:bg-[#4e0f68] px-4 py-3 font-medium transition-all"
               onClick={() => navigate("/signup")}
             >
               Start writing

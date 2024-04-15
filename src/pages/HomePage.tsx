@@ -54,7 +54,7 @@ export default function HomePage() {
       {!isLoadingVisible && (
         <section className="flex flex-col bg-gradient-to-tr from-[#2e1139] to-[#190322] items-center">
           <div className="px-24 py-24 text-center">
-            <p className="text-gray-400 mb-4">Pick and choose. Your choice</p>
+            <p className="text-gray-400 mb-4">It's your choice</p>
             <h2 className="text-3xl md:text-4xl font-serif">
               Reading has never been this{" "}
               <span className="text-rose-300">interactive</span>
@@ -68,9 +68,7 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Dynamic Ambience</p>
                 <p className="text-gray-400">
-                  Sample TextSample TextSample TextSample TextSample TextSample
-                  Text Sample Text Sample Text Sample Text Sample Text Sample
-                  Text Sample Text Sample Text Sample Text
+                  Ambience elements such as sounds and images to enhance your immersion and reading experience
                 </p>
               </div>
               <div className="text-left md:w-1/3">
@@ -81,9 +79,7 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Audio Tonality</p>
                 <p className="text-gray-400">
-                  Sample TextSample TextSample TextSample TextSample TextSample
-                  Text Sample Text Sample Text Sample Text Sample Text Sample
-                  Text Sample Text Sample Text Sample Text
+                  Fancy a listen? Listen to an audio version of the post that appropriately shifts in tone based on the content
                 </p>
               </div>
               <div className="text-left md:w-1/3">
@@ -94,9 +90,7 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Interactive Elements</p>
                 <p className="text-gray-400">
-                  Sample TextSample TextSample TextSample TextSample TextSample
-                  Text Sample Text Sample Text Sample Text Sample Text Sample
-                  Text Sample Text Sample Text Sample Text
+                  Other fun and interactive elements coming your way. Stay tuned for enhanced features such as visual effects and quizzes
                 </p>
               </div>
             </div>
@@ -167,9 +161,7 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Polls & Prompts</p>
                 <p className="text-gray-400">
-                  Sample TextSample TextSample TextSample TextSample TextSample
-                  Text Sample Text Sample Text Sample Text Sample Text Sample
-                  Text Sample Text Sample Text Sample Text
+                  Create interactive polls in your posts to achieve a deeper level of engagement with your audience
                 </p>
               </div>
               <div className="text-left md:w-1/3">
@@ -180,9 +172,7 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Analytics Dashboard </p>
                 <p className="text-gray-400">
-                  Sample TextSample TextSample TextSample TextSample TextSample
-                  Text Sample Text Sample Text Sample Text Sample Text Sample
-                  Text Sample Text Sample Text Sample Text
+                  Comprehensive analytics to track the performance of your posts for insights and feedback
                 </p>
               </div>
               <div className="text-left md:w-1/3">
@@ -193,9 +183,7 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Superb customization</p>
                 <p className="text-gray-400">
-                  Sample TextSample TextSample TextSample TextSample TextSample
-                  Text Sample Text Sample Text Sample Text Sample Text Sample
-                  Text Sample Text Sample Text Sample Text
+                  Edit your posts with ease and customize them to your liking with our user-friendly editor. Add images, quotes and more
                 </p>
               </div>
             </div>

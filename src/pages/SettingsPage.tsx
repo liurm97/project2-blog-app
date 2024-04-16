@@ -1,8 +1,9 @@
 import { updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, firestore } from "../firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
+import { doc, updateDoc } from "firebase/firestore";
 
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,10 +16,21 @@ export default function ProfilePage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await updateProfile(auth.currentUser, {
+      await updateProfile(auth.currentUser!, {
         displayName: `${firstName} ${lastName}`,
       });
-      navigate(`/profiles/${auth.currentUser.uid}/dashboard`);
+
+      // Update blogger name in the `users` collection
+      const userRef = doc(firestore, "users", auth.currentUser?.uid!);
+      const capitalizedFirstName =
+        firstName.charAt(0).toUpperCase() + firstName.slice(1);
+      const capitalizedLastName =
+        lastName.charAt(0).toUpperCase() + lastName.slice(1);
+      await updateDoc(userRef, {
+        bloggerName: capitalizedFirstName + " " + capitalizedLastName,
+      });
+
+      navigate(`/profiles/${auth.currentUser!.uid}/dashboard`);
     } catch (error: any) {
       toast({
         title: "An error occurred",

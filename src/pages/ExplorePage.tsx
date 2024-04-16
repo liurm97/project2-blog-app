@@ -45,11 +45,16 @@ export default function ExplorePage() {
             return (
               <div
                 className="mb-12 md:mb-0"
-                onClick={() => console.log("clicked")}
+                // onClick={() => console.log("clicked")}
               >
                 {/* Replace with blogger name, post title, publishedDate, readTime here */}
                 <p className="font-medium text-gray-400">{post.author}</p>
-                <p className="text-2xl md:text-4xl leading-snug">
+                <p
+                  className="text-2xl md:text-4xl leading-snug cursor-pointer"
+                  onClick={() => {
+                    console.log("click to open post");
+                  }}
+                >
                   {post.title}
                 </p>
                 <p className="text-gray-400 mt-2">

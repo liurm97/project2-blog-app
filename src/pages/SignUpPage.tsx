@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import splashImage1 from "../assets/splash1.svg";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, firestore } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 import { useToast } from "@chakra-ui/react";
 
-
+// // Add a new document in collection "cities"
+// await setDoc(doc(db, "cities", "LA"), {
+//   name: "Los Angeles",
+//   state: "CA",
+//   country: "USA"
+// });
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
-  
+
   const navigate = useNavigate();
 
   const signUp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,6 +28,10 @@ export default function SignUpPage() {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       // Extract user ID from the user object to use for routing and claims
       const userID = user.user.uid;
+      // Upon successful sign up, create record in the `users` collection
+      await setDoc(doc(firestore, "users", userID), {
+        bloggerName: "placeholder",
+      });
       console.log("User", user);
       navigate(`/profiles/${userID}/settings`);
     } catch (error: any) {

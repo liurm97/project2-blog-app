@@ -28,16 +28,13 @@ import { MultiSelector } from "./MultiSelector";
 
 import { slashCommand, suggestionItems } from "./slashCommands";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
-import { useEditor } from "@tiptap/react";
-import { json, useParams } from "react-router-dom";
-import { set } from "firebase/database";
-import { ref, updateMetadata, uploadString } from "firebase/storage";
-import { storage, database } from "../firebase";
-// import { BlogEditorHeader } from "./BlogEditorHeader";
+import { useParams } from "react-router-dom";
 import { saveBlog } from "../editorUtils/saveBlog";
 import { postType } from "../types/postType";
 import { getBlogMetadata } from "../editorUtils/getBlogMetadata";
 import { updateBlog } from "../editorUtils/updateBlog";
+import { auth } from "../firebase";
+import { ReadTimeCounter } from "./ReadTimeCounter";
 
 type updateDashBoardStateFunctionType = (state: string) => void;
 
@@ -67,31 +64,61 @@ const AdvancedEditor = ({
   const [postId, setPostId] = useState<string | null>(null);
   const [htmlPost, setHtmlPost] = useState<string | null>(null);
   const [jsonPost, setJsonPost] = useState<JSONContent | null>(null);
+  const [postStatus, setPostStatus] = useState<string | null>(null);
 
   // State for Title, Readtime, Tags
+  // ReadTime
+  const [title, setTitle] = useState<string>("");
+  const [readTime, setReadTime] = useState<number>(15);
+  const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
+  const [isAllFieldsFilled, setIsAllFieldsFilled] = useState<boolean>(false);
+
+  const increaseReadTime = (currReadTime: number): void => {
+    if (currReadTime >= 5 && currReadTime < 30)
+      setReadTime((currReadTime) => currReadTime + 1);
+  };
+
+  const decreaseReadTime = (currReadTime: number): void => {
+    if (currReadTime > 5 && currReadTime <= 30)
+      setReadTime((currReadTime) => currReadTime - 1);
+  };
+
+  // Others
   const addTags = (newTagValue: string) => {
     setSelectedTags([...selectedTags, newTagValue]);
   };
   const removeTags = (tagToRemove: any) => {
     setSelectedTags(selectedTags.filter((val: string) => val !== tagToRemove));
   };
-  const [title, setTitle] = useState<string>("");
-  const [readTime, setReadTime] = useState<string>("");
-  const [selectedTags, setSelectedTags] = useState<Array<string>>([]);
 
+  const validateAllFieldsFilled = () => {
+    if (title === "" || readTime === -1 || selectedTags.length === 0) {
+      setIsAllFieldsFilled(false);
+      console.log(isAllFieldsFilled);
+      return;
+    } else {
+      setIsAllFieldsFilled(true);
+      console.log(isAllFieldsFilled);
+      return;
+    }
+  };
+  useEffect(() => {
+    validateAllFieldsFilled();
+  }, [readTime, title, selectedTags]);
+
+  // State for Editor
   useEffect(() => {
     // post Id
     setPostId(crypto.randomUUID().toString());
 
     const executeGetMetadata = async () => {
       const postMetadata = await getBlogMetadata(editBloggerId!, editPostId!);
+      setPostStatus(postMetadata!["status"]);
       if (dashboardState == "edit") {
         if (postMetadata) {
-          console.log("exec1");
           setInitialContent(JSON.parse(postMetadata!["jsonContent"]));
           setJsonPost(JSON.parse(postMetadata!["jsonContent"]));
         } else {
-          console.log("exec2");
           setInitialContent({
             type: "doc",
             content: [
@@ -117,7 +144,7 @@ const AdvancedEditor = ({
   const [initialContent, setInitialContent] = useState<null | JSONContent>(
     null
   );
-
+  console.log("postStatus", postStatus);
   const debouncedUpdates = useDebouncedCallback(
     async (editor: EditorInstance) => {
       const json = editor.getJSON();
@@ -131,6 +158,7 @@ const AdvancedEditor = ({
   useEffect(() => {
     if (dashboardState == "create") {
       setInitialContent(defaultEditorContent);
+      setJsonPost(defaultEditorContent);
     }
   }, []);
 
@@ -143,7 +171,7 @@ const AdvancedEditor = ({
           <label htmlFor="title">Title: </label>
           <input
             value={title}
-            className="text-white bg-[#2e1139]"
+            className="text-white bg-[#2e1139] rounded-md"
             type="text"
             name="title"
             id="title"
@@ -153,17 +181,23 @@ const AdvancedEditor = ({
           />
         </div>
         <div>
-          <label htmlFor="readTime">Read Time: </label>
+          <ReadTimeCounter
+            readTime={readTime}
+            increaseReadTime={increaseReadTime}
+            decreaseReadTime={decreaseReadTime}
+          ></ReadTimeCounter>
+          {/* <label htmlFor="readTime">Read Time: </label>
           <input
             value={readTime}
-            className="text-white bg-[#2e1139]"
+            className="text-white bg-[#2e1139] rounded-md"
             type="text"
             name="readTime"
             id="readTime"
+            placeholder="Minutes"
             onChange={(e) => {
               setReadTime(() => e.target.value);
             }}
-          />
+          /> */}
         </div>
         <MultiSelector
           addTags={addTags}
@@ -225,7 +259,10 @@ const AdvancedEditor = ({
           </EditorCommand>
         </EditorContent>
         <button
-          className="border"
+          disabled={
+            dashboardState == "edit" && postStatus == "draft" ? true : false
+          }
+          className={"border disabled:text-slate-500 disabled:border-none"}
           onClick={() => {
             if (dashboardState == "edit") {
               console.log("edit state - save draft");
@@ -233,24 +270,31 @@ const AdvancedEditor = ({
               //   ...postMetadata,
               // };
               const newDraftDate = new Date().toLocaleDateString("sv-SE");
-              updateBlog(editBloggerId!, editPostId!, {
-                bloggerId: bloggerId,
-                postId: editPostId,
-                content: htmlPost,
-                jsonContent: JSON.stringify(jsonPost),
-                draftDate: newDraftDate,
-                publishedDate: "",
-                title: title,
-                readTime: readTime,
-                tags: selectedTags,
-                status: "draft",
-              }).then(() => {
+              updateBlog(
+                editBloggerId!,
+                editPostId!,
+                {
+                  bloggerName: auth.currentUser?.displayName!,
+                  bloggerId: bloggerId,
+                  postId: editPostId,
+                  content: htmlPost,
+                  jsonContent: JSON.stringify(jsonPost),
+                  draftDate: newDraftDate,
+                  publishedDate: "",
+                  title: title,
+                  readTime: readTime,
+                  tags: selectedTags,
+                  status: "draft",
+                },
+                false
+              ).then(() => {
                 updateDashBoardState("");
               });
             } else {
               const draftDate = new Date().toLocaleDateString("sv-SE");
               saveBlog(
                 bloggerId!,
+                auth.currentUser?.displayName!,
                 postId!,
                 htmlPost!,
                 jsonPost!,
@@ -268,28 +312,39 @@ const AdvancedEditor = ({
           Save Draft
         </button>
         <button
-          className="border"
+          className={"border disabled:text-slate-500 disabled:border-none"}
+          disabled={
+            dashboardState == "edit" &&
+            (!isAllFieldsFilled || postStatus == "published" ? true : false)
+          }
           onClick={() => {
             if (dashboardState == "edit") {
               const newPublishedDate = new Date().toLocaleDateString("sv-SE");
-              updateBlog(editBloggerId!, editPostId!, {
-                bloggerId: bloggerId,
-                postId: editPostId,
-                content: htmlPost,
-                jsonContent: JSON.stringify(jsonPost),
-                draftDate: "",
-                publishedDate: newPublishedDate,
-                title: title,
-                readTime: readTime,
-                tags: selectedTags,
-                status: "published",
-              }).then(() => {
+              updateBlog(
+                editBloggerId!,
+                editPostId!,
+                {
+                  bloggerName: auth.currentUser?.displayName!,
+                  bloggerId: bloggerId,
+                  postId: editPostId,
+                  content: htmlPost,
+                  jsonContent: JSON.stringify(jsonPost),
+                  draftDate: "",
+                  publishedDate: newPublishedDate,
+                  title: title,
+                  readTime: readTime,
+                  tags: selectedTags,
+                  status: "published",
+                },
+                true
+              ).then(() => {
                 updateDashBoardState("");
               });
             } else {
               const publishedDate = new Date().toLocaleDateString("sv-SE");
               saveBlog(
                 bloggerId!,
+                auth.currentUser?.displayName!,
                 postId!,
                 htmlPost!,
                 jsonPost!,

@@ -45,29 +45,6 @@ export default function ProfilePage() {
     execute();
   }, [dashboardState]);
 
-  // const getEditorContent = async () => {
-  //   const bloggerIdRef = ref(storage, `bloggers/${bloggerId}`);
-  //   console.log("getting url");
-  //   const url = await getDownloadURL(bloggerIdRef);
-
-  //   const xhr = new XMLHttpRequest();
-  //   // xhr.responseType = 'blob';
-  //   xhr.onload = (event) => {
-  //     const blob = xhr.response;
-  //     console.log("blob", blob);
-  //     setBlogPosts(blob);
-  //   };
-  //   xhr.open("GET", url);
-  //   xhr.send();
-  //   console.log("blog HTML uploaded");
-  // };
-
-  // getBlogs(bloggerId!).then((res) => {
-  //   console.log("running");
-  //   setBlogPosts(res);
-  // });
-  // getEditorContent();
-
   return (
     <div className="flex flex-col h-screen">
       <div className="flex-grow flex flex-col gap-4 mt-24 px-16">

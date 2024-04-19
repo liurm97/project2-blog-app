@@ -26,14 +26,17 @@ export default function SignUpPage() {
     try {
       // Create a new user with the credentials entered by the user
       const user = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(user);
       // Extract user ID from the user object to use for routing and claims
       const userID = user.user.uid;
       // Upon successful sign up, create record in the `users` collection
       await setDoc(doc(firestore, "users", userID), {
         bloggerName: "placeholder",
+        // Default number of published post
+        numPublishedPost: 0,
       });
       console.log("User", user);
-      navigate(`/profiles/${userID}/settings`);
+      if (user) navigate(`/profiles/${userID}/settings`);
     } catch (error: any) {
       // If existing account exists, display alert message. Otherwise, display generic error message
       if (error.code === "auth/email-already-in-use") {

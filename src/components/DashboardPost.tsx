@@ -25,7 +25,7 @@ const DashboardPost = ({
     status === "published"
       ? "bg-green-600 text-green-200"
       : "bg-violet-700 text-violet-200";
-
+  // console.log(status);
   return (
     <div className="rounded-sm border-b flex items-center border-b-gray-700 py-4">
       <div className="flex flex-col pr-4 py-6 w-[26rem]">
@@ -56,7 +56,6 @@ const DashboardPost = ({
           onClick={() => {
             updateDashBoardState("edit");
             updateEditPostId(postId);
-            // console.log("editing", postId);
           }}
         >
           <EditIcon boxSize={4} color="gray.400" />
@@ -65,10 +64,8 @@ const DashboardPost = ({
         <button
           className="bg-[#511a1a] px-3 py-2 pt-1 rounded-md"
           onClick={() => {
-            console.log("delete button");
-            console.log("delete post", postId);
             removeBlog(postId);
-            deleteBlog(bloggerId, postId);
+            deleteBlog(bloggerId, postId, status);
           }}
         >
           <DeleteIcon boxSize={4} color="red.500" />

@@ -46,7 +46,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/profiles/:bloggerId/posts/:postTitle",
+        path: "/profiles/:bloggerId/posts/:postId",
         element: <Post />,
       },
     ],
@@ -66,13 +66,13 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <ChakraProvider
-      toastOptions={{ defaultOptions: { position: "bottom" } }}
-      resetCSS={false}
-      disableGlobalStyle={true}
-    >
-      <RouterProvider router={router} />
-    </ChakraProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ChakraProvider
+    toastOptions={{ defaultOptions: { position: "bottom" } }}
+    resetCSS={false}
+    disableGlobalStyle={true}
+  >
+    <RouterProvider router={router} />
+  </ChakraProvider>
+  // </React.StrictMode>
 );

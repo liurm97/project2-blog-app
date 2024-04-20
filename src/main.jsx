@@ -70,7 +70,6 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  // <React.StrictMode>
   <ChakraProvider
     toastOptions={{ defaultOptions: { position: "bottom" } }}
     resetCSS={false}
@@ -78,5 +77,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   >
     <RouterProvider router={router} />
   </ChakraProvider>
-  // </React.StrictMode>
 );

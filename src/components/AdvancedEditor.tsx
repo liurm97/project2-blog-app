@@ -149,7 +149,7 @@ const AdvancedEditor = ({
 
   return (
     <div className="relative w-full max-w-screen-lg mx-auto my-0 z-0 flex flex-col gap-2">
-      <div className="flex py-auto justify-start gap-6 items-center">
+      <div className="max-[910px]:flex-col gap-6 flex flex-row py-auto justify-start gap-6 items-center mb-4">
         <div>
           <label htmlFor="title">Title: </label>
           <input
@@ -182,7 +182,7 @@ const AdvancedEditor = ({
         <EditorContent
           initialContent={initialContent}
           extensions={extensions}
-          className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background sm:rounded-lg sm:border sm:shadow-lg bg-[#2e1139] z-0"
+          className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background sm:rounded-lg border sm:shadow-lg bg-[#2e1139] z-0"
           editorProps={{
             handleDOMEvents: {
               keydown: (_view, event) => handleCommandNavigation(event),

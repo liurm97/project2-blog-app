@@ -68,7 +68,8 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Dynamic Ambience</p>
                 <p className="text-gray-400">
-                  Ambience elements such as sounds and images to enhance your immersion and reading experience
+                  Ambience elements such as sounds and images to enhance your
+                  immersion and reading experience
                 </p>
               </div>
               <div className="text-left md:w-1/3">
@@ -79,7 +80,8 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Audio Tonality</p>
                 <p className="text-gray-400">
-                  Fancy a listen? Listen to an audio version of the post that appropriately shifts in tone based on the content
+                  Fancy a listen? Listen to an audio version of the post that
+                  appropriately shifts in tone based on the content
                 </p>
               </div>
               <div className="text-left md:w-1/3">
@@ -90,7 +92,8 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Interactive Elements</p>
                 <p className="text-gray-400">
-                  Other fun and interactive elements coming your way. Stay tuned for enhanced features such as visual effects and quizzes
+                  Other fun and interactive elements coming your way. Stay tuned
+                  for enhanced features such as visual effects and quizzes
                 </p>
               </div>
             </div>
@@ -98,13 +101,13 @@ export default function HomePage() {
         </section>
       )}
       {!isLoadingVisible && (
-        <section className="flex flex-col justify-center items-center bg-[#0c434b] text-slate-200">
+        <section className="flex flex-col justify-center items-center bg-[#0c434b] text-slate-200 overflow-hidden">
           <div className="px-14 py-24 text-center">
             <h2 className="text-3xl md:text-4xl font-serif">
               Be a writer. <span className="text-green-300">Engage</span> your
               audience
             </h2>
-            <div className="mt-10 flex justify-center gap-4 md:scale-110">
+            <div className="mt-10 flex justify-center gap-4 md:scale-110 max-[390px]:flex-col items-center">
               <Avatar
                 name="Ryan Florence"
                 showBorder={false}
@@ -161,7 +164,8 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Polls & Prompts</p>
                 <p className="text-gray-400">
-                  Create interactive polls in your posts to achieve a deeper level of engagement with your audience
+                  Create interactive polls in your posts to achieve a deeper
+                  level of engagement with your audience
                 </p>
               </div>
               <div className="text-left md:w-1/3">
@@ -172,7 +176,8 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Analytics Dashboard </p>
                 <p className="text-gray-400">
-                  Comprehensive analytics to track the performance of your posts for insights and feedback
+                  Comprehensive analytics to track the performance of your posts
+                  for insights and feedback
                 </p>
               </div>
               <div className="text-left md:w-1/3">
@@ -183,7 +188,8 @@ export default function HomePage() {
                 />
                 <p className="font-medium text-xl mb-3">Superb customization</p>
                 <p className="text-gray-400">
-                  Edit your posts with ease and customize them to your liking with our user-friendly editor. Add images, quotes and more
+                  Edit your posts with ease and customize them to your liking
+                  with our user-friendly editor. Add images, quotes and more
                 </p>
               </div>
             </div>

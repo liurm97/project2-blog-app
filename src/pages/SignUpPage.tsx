@@ -104,6 +104,7 @@ export default function SignUpPage() {
               <input
                 id="password"
                 name="password"
+                role="password"
                 type="password"
                 pattern="[a-zA-Z0-9]{6,}"
                 title="Enter a password with at least 6 characters"

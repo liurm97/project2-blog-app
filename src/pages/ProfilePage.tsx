@@ -8,7 +8,7 @@ import { getBlogs } from "../editorUtils/getBlogs";
 export default function ProfilePage() {
   const [blogPosts, setBlogPosts] = useState([]);
   const [dashboardState, setDashboardState] = useState<string>(""); // states: "", edit, create
-  const [editPostId, setEditPostId] = useState<string>(""); // post id of edit-article
+  const [editPostId, setEditPostId] = useState<string>("");
   const { bloggerId } = useParams();
 
   const updateEditPostId = (newState: string): void => {

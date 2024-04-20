@@ -45,9 +45,7 @@ const AdvancedEditor = ({
   const { bloggerId } = useParams();
 
   // create random postID
-  const [postMetadata, setPostMetadata] = useState<postType | undefined>(
-    undefined
-  );
+  const [_, setPostMetadata] = useState<postType | undefined>(undefined);
 
   const [postId, setPostId] = useState<string | null>(null);
   const [htmlPost, setHtmlPost] = useState<string | null>(null);

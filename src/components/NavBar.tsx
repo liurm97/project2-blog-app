@@ -86,15 +86,16 @@ const NavBar = () => {
             <button
               className="font-medium text-gray-400 hover:text-white"
               onClick={() => {
-                signOut(auth);
-                navigate("/");
+                signOut(auth).then(() => {
+                  navigate("/");
+                });
               }}
             >
               Logout{" "}
             </button>
           )}
           {isLoggedIn && (
-            <Avatar className="ml-2" name={auth.currentUser!.displayName} />
+            <Avatar className="ml-2" name={auth.currentUser!.displayName!} />
           )}
         </div>
       </nav>

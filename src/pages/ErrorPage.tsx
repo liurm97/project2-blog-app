@@ -4,7 +4,6 @@ import errorImage from "../assets/error.svg";
 import Spinner from "../components/Spinner";
 
 export default function ErrorPage() {
-  // const error = useRouteError();
   const navigate = useNavigate();
 
   useEffect(() => {

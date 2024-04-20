@@ -1,5 +1,5 @@
 import cn from "../utils";
-import { EditorBubbleItem, useEditor, EditorInstance } from "novel";
+import { EditorBubbleItem, useEditor } from "novel";
 import {
   BoldIcon,
   ItalicIcon,
@@ -8,7 +8,6 @@ import {
   CodeIcon,
   LucideIcon,
 } from "lucide-react";
-// import { Button } from "@/components/tailwind/ui/button";
 
 export type SelectorItem = {
   name: string;
@@ -62,14 +61,12 @@ export const TextButtons = ({ editor }: { editor: any }) => {
             item.command(editor);
           }}
         >
-          {/* <Button size="sm" className="rounded-none" variant="ghost"> */}
           <button>
             <item.icon
               className={cn("h-4 w-4", {
                 "text-blue-500": item.isActive(editor),
               })}
             />
-            {/* </Button> */}
           </button>
         </EditorBubbleItem>
       ))}

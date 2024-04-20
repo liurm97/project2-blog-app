@@ -19,14 +19,12 @@ export default function SignInPage() {
     try {
       // Sign in with credentials entered by the user
       const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log("User", user);
       // Extract user ID from the user object to use for routing
       const userID = user.user.uid;
       navigate(`/profiles/${userID}/dashboard`);
     } catch (error: any) {
       // If login details are incorrect, display alert message.
       if (error.code === "auth/invalid-credential") {
-        console.log(error.code);
         toast({
           title: "Invalid login credentials",
           description: "Please use a valid email address / password.",
@@ -36,7 +34,6 @@ export default function SignInPage() {
           variant: "solid",
         });
       } else {
-        console.log(error.code);
         toast({
           title: "An error occurred",
           description: "Please try again later.",

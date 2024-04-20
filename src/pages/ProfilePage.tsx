@@ -142,22 +142,6 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
-      {/* <div className="p-14">
-      <button
-        className="mt-10 border-2 rounded-md p-2"
-        onClick={() => {
-          signOut(auth);
-          navigate("/");
-        }}
-      >
-        Logout
-      </button> */}
-
-      {/* <button></button> */}
-      {/* <div
-        className={"bg-[#2e1139] p-4"}
-        dangerouslySetInnerHTML={{ __html: blogPosts }}
-      ></div> */}
     </div>
   );
 }

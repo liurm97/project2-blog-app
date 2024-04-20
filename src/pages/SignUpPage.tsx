@@ -6,12 +6,6 @@ import { auth, firestore } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useToast } from "@chakra-ui/react";
 
-// // Add a new document in collection "cities"
-// await setDoc(doc(db, "cities", "LA"), {
-//   name: "Los Angeles",
-//   state: "CA",
-//   country: "USA"
-// });
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +20,6 @@ export default function SignUpPage() {
     try {
       // Create a new user with the credentials entered by the user
       const user = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(user);
       // Extract user ID from the user object to use for routing and claims
       const userID = user.user.uid;
       // Upon successful sign up, create record in the `users` collection
@@ -35,12 +28,10 @@ export default function SignUpPage() {
         // Default number of published post
         numPublishedPost: 0,
       });
-      console.log("User", user);
       if (user) navigate(`/profiles/${userID}/settings`);
     } catch (error: any) {
       // If existing account exists, display alert message. Otherwise, display generic error message
       if (error.code === "auth/email-already-in-use") {
-        console.log(error.code);
         toast({
           title: "Account already exists",
           description: "Please use another email address",
@@ -50,7 +41,6 @@ export default function SignUpPage() {
           variant: "solid",
         });
       } else {
-        console.log(error.code);
         toast({
           title: "An error occurred",
           description: "Please try again later.",

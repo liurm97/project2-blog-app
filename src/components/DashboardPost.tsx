@@ -25,7 +25,6 @@ const DashboardPost = ({
     status === "published"
       ? "bg-green-600 text-green-200"
       : "bg-violet-700 text-violet-200";
-  // console.log(status);
   return (
     <div className="rounded-sm border-b flex items-center border-b-gray-700 py-4">
       <div className="flex flex-col pr-4 py-6 w-[26rem]">

@@ -9,7 +9,6 @@ export default function Post() {
   const { bloggerId, postId } = useParams();
 
   useEffect(() => {
-    console.log("in useEffect");
     const getPostData = async () => {
       const postRef = doc(firestore, bloggerId!, postId!);
       const postSnapshot = await getDoc(postRef);
@@ -24,7 +23,7 @@ export default function Post() {
   return (
     <>
       {isLoading ? (
-        <h1>Loading</h1>
+        <h1>{""}</h1>
       ) : (
         <div className="min-h-screen bg-gray-950">
           <section className="flex flex-col items-center pt-48 pb-24 px-16">

@@ -31,17 +31,12 @@ export const MultiSelector = ({
   selectedValues: Array<string>;
   dashboardState: string;
 }) => {
-  const [tagOptions, setTagOptions] = useState(tags);
+  const [tagOptions, _setTagOptions] = useState(tags);
   const preprocessedTagArr = selectedValues.map((ele) => {
-    const o = new Object();
+    const o: any = new Object();
     o.Type = ele;
     return o;
   });
-  // const [selectedValue, setSelectedValue] = useState(selectedValues);
-  // const [selectedValues, setSelectedValues] = useState<
-  //   Array<string> | undefined
-  // >(undefined);
-  // console.log(selectedValues);
   return (
     <>
       {dashboardState == "edit" && (
@@ -50,15 +45,10 @@ export const MultiSelector = ({
             selectedValues={preprocessedTagArr}
             placeholder="Tags"
             selectionLimit={2}
-            onSelect={(list, item) => {
-              console.log("list", list);
-              console.log("item", item);
+            onSelect={(_, item) => {
               addTags(item.Type);
             }}
-            onRemove={(list, item) => {
-              console.log("list", list);
-              console.log("item", item);
-              console.log("passing in", item.Type, "to be removed");
+            onRemove={(_, item) => {
               removeTags(item.Type);
             }}
             options={tagOptions}
@@ -88,10 +78,10 @@ export const MultiSelector = ({
           <Multiselect
             placeholder="Tags"
             selectionLimit={2}
-            onSelect={(list, item) => {
+            onSelect={(_, item) => {
               addTags(item.Type);
             }}
-            onRemove={(list, item) => {
+            onRemove={(_, item) => {
               removeTags(item.Type);
             }}
             options={tagOptions}

@@ -1,4 +1,4 @@
-import { doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { firestore, auth } from "../firebase";
 import { type JSONContent } from "novel";
 import { updateNumPublishedPost } from "../utils/updateNumPublishedPost";
@@ -33,7 +33,5 @@ export const saveBlog = async (
       // add numPublishedPost value
       await updateNumPublishedPost("add");
     }
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };

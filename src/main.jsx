@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -10,6 +9,7 @@ import SignUpPage from "./pages/SignupPage";
 import ErrorPage from "./pages/ErrorPage";
 import ExplorePage from "./pages/ExplorePage";
 import SettingsPage from "./pages/SettingsPage";
+import BloggerPostPage from "./pages/BloggerPostPage";
 import { ChakraProvider } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import ProtectedRoutes from "./components/ProtectedRoutes";
@@ -48,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/profiles/:bloggerId/posts/:postId",
         element: <Post />,
+      },
+      {
+        path: "/profiles/:bloggerId/posts",
+        element: <BloggerPostPage />,
       },
     ],
   },

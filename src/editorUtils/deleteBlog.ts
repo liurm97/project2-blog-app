@@ -1,5 +1,5 @@
-import { doc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
-import { firestore, auth } from "../firebase";
+import { doc, deleteDoc } from "firebase/firestore";
+import { firestore } from "../firebase";
 import { updateNumPublishedPost } from "../utils/updateNumPublishedPost";
 
 export const deleteBlog = async (
@@ -7,8 +7,6 @@ export const deleteBlog = async (
   postId: string,
   status: string
 ): Promise<void> => {
-  console.log(status);
-
   try {
     await deleteDoc(doc(firestore, bloggerId, postId));
     // get numPublishedPost of the blogger
@@ -17,6 +15,6 @@ export const deleteBlog = async (
       updateNumPublishedPost("minus");
     }
   } catch (err) {
-    console.log(err);
+    throw new Error("Something wrong happened when deleting post");
   }
 };

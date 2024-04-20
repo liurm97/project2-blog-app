@@ -10,11 +10,9 @@ export default function ProtectedRoutes({
 }) {
   const navigate = useNavigate();
   const { bloggerId } = useParams();
-  console.log("bloggerId from path: ", bloggerId);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("id of user: ", user?.uid);
       // If user is not logged in, redirect to sign in page.
       // If user is logged in, grant access if correct user ID matches the blogger ID in the route.
       if (user?.uid === undefined) {

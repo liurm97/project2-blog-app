@@ -1,15 +1,4 @@
-// Take 2 of the most recently published blogs from each blogger
-
-import {
-  collection,
-  getDocs,
-  getDoc,
-  orderBy,
-  where,
-  limit,
-  doc,
-  query,
-} from "firebase/firestore";
+import { collection, getDocs, orderBy, where, query } from "firebase/firestore";
 import { firestore } from "../firebase";
 
 // Total number of published_posts should be limited to 8:

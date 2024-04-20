@@ -1,4 +1,3 @@
-// import { testContent } from "../editorUtils/testContent";
 import { defaultEditorContent } from "../editorUtils/originalContent";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -17,15 +16,6 @@ import { blogEditorExtension } from "../editorUtils/blogEditorExtension";
 import { uploadFn } from "../editorUtils/image-upload";
 import { MultiSelector } from "./MultiSelector";
 
-/*
- * OPTIONAL EDITOR ADD-ONs
-
-// import { Separator } from "./ui/separator";
-// import { NodeSelector } from "./selectors/node-selector";
-// import { LinkSelector } from "./selectors/link-selector";
-// import { ColorSelector } from "./selectors/color-selector";
-*/
-
 import { slashCommand, suggestionItems } from "./slashCommands";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { useParams } from "react-router-dom";
@@ -38,7 +28,6 @@ import { ReadTimeCounter } from "./ReadTimeCounter";
 
 type updateDashBoardStateFunctionType = (state: string) => void;
 
-// const extensions = [...BlogEditorExtension, slashCommand];
 const extensions = [...blogEditorExtension, slashCommand];
 
 const AdvancedEditor = ({
@@ -59,7 +48,6 @@ const AdvancedEditor = ({
   const [postMetadata, setPostMetadata] = useState<postType | undefined>(
     undefined
   );
-  if (postMetadata) console.log("jsonContent", postMetadata!["jsonContent"]);
 
   const [postId, setPostId] = useState<string | null>(null);
   const [htmlPost, setHtmlPost] = useState<string | null>(null);
@@ -94,11 +82,9 @@ const AdvancedEditor = ({
   const validateAllFieldsFilled = () => {
     if (title === "" || readTime === -1 || selectedTags.length === 0) {
       setIsAllFieldsFilled(false);
-      console.log(isAllFieldsFilled);
       return;
     } else {
       setIsAllFieldsFilled(true);
-      console.log(isAllFieldsFilled);
       return;
     }
   };
@@ -144,7 +130,6 @@ const AdvancedEditor = ({
   const [initialContent, setInitialContent] = useState<null | JSONContent>(
     null
   );
-  console.log("postStatus", postStatus);
   const debouncedUpdates = useDebouncedCallback(
     async (editor: EditorInstance) => {
       const json = editor.getJSON();
@@ -186,18 +171,6 @@ const AdvancedEditor = ({
             increaseReadTime={increaseReadTime}
             decreaseReadTime={decreaseReadTime}
           ></ReadTimeCounter>
-          {/* <label htmlFor="readTime">Read Time: </label>
-          <input
-            value={readTime}
-            className="text-white bg-[#2e1139] rounded-md"
-            type="text"
-            name="readTime"
-            id="readTime"
-            placeholder="Minutes"
-            onChange={(e) => {
-              setReadTime(() => e.target.value);
-            }}
-          /> */}
         </div>
         <MultiSelector
           addTags={addTags}
@@ -206,9 +179,7 @@ const AdvancedEditor = ({
           dashboardState={dashboardState}
         />
       </div>
-      <div className="absolute right-5 top-5 z-0 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
-        {/* {saveStatus} */}
-      </div>
+      <div className="absolute right-5 top-5 z-0 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground"></div>
       <EditorRoot>
         <EditorContent
           initialContent={initialContent}
@@ -228,7 +199,6 @@ const AdvancedEditor = ({
           }}
           onUpdate={({ editor }) => {
             debouncedUpdates(editor);
-            // setSaveStatus("Unsaved");
           }}
           slotAfter={<ImageResizer />}
         >
@@ -259,20 +229,14 @@ const AdvancedEditor = ({
           </EditorCommand>
         </EditorContent>
         <button
-          disabled={
-            dashboardState == "edit" && postStatus == "draft" ? true : false
-          }
           className={"border disabled:text-slate-500 disabled:border-none"}
           onClick={() => {
             if (dashboardState == "edit") {
-              console.log("edit state - save draft");
-              // const { content, jsonContent } = {
-              //   ...postMetadata,
-              // };
               const newDraftDate = new Date().toLocaleDateString("sv-SE");
               updateBlog(
                 editBloggerId!,
                 editPostId!,
+                postStatus!,
                 {
                   bloggerName: auth.currentUser?.displayName!,
                   bloggerId: bloggerId,
@@ -314,8 +278,11 @@ const AdvancedEditor = ({
         <button
           className={"border disabled:text-slate-500 disabled:border-none"}
           disabled={
-            dashboardState == "edit" &&
-            (!isAllFieldsFilled || postStatus == "published" ? true : false)
+            dashboardState == "edit"
+              ? !isAllFieldsFilled || postStatus == "published"
+                ? true
+                : false
+              : !isAllFieldsFilled
           }
           onClick={() => {
             if (dashboardState == "edit") {
@@ -323,6 +290,7 @@ const AdvancedEditor = ({
               updateBlog(
                 editBloggerId!,
                 editPostId!,
+                postStatus!,
                 {
                   bloggerName: auth.currentUser?.displayName!,
                   bloggerId: bloggerId,

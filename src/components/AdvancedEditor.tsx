@@ -98,6 +98,7 @@ const AdvancedEditor = ({
     const executeGetMetadata = async () => {
       const postMetadata = await getBlogMetadata(editBloggerId!, editPostId!);
       setPostStatus(postMetadata!["status"]);
+      setHtmlPost(postMetadata!["content"]);
       if (dashboardState == "edit") {
         if (postMetadata) {
           setInitialContent(JSON.parse(postMetadata!["jsonContent"]));
@@ -148,13 +149,13 @@ const AdvancedEditor = ({
   if (!initialContent) return null;
 
   return (
-    <div className="relative w-full max-w-screen-lg mx-auto my-0 z-0 flex flex-col gap-2">
-      <div className="max-[910px]:flex-col gap-6 flex flex-row py-auto justify-start gap-6 items-center mb-4">
+    <div className="relative w-full max-w-screen-lg mx-auto my-0 z-0 flex flex-col gap-2 mb-6">
+      <div className="max-[910px]:flex-col gap-6 flex flex-row py-auto justify-start gap-6 items-center mb-2">
         <div>
           <label htmlFor="title">Title: </label>
           <input
             value={title}
-            className="text-white bg-[#2e1139] rounded-md"
+            className="text-white bg-[#2e1139] rounded-md p-2"
             type="text"
             name="title"
             id="title"
@@ -182,7 +183,7 @@ const AdvancedEditor = ({
         <EditorContent
           initialContent={initialContent}
           extensions={extensions}
-          className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background sm:rounded-lg border sm:shadow-lg bg-[#2e1139] z-0"
+          className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background sm:rounded-lg border sm:shadow-lg bg-[#2e1139] z-0 p-2"
           editorProps={{
             handleDOMEvents: {
               keydown: (_view, event) => handleCommandNavigation(event),
@@ -200,7 +201,7 @@ const AdvancedEditor = ({
           }}
           slotAfter={<ImageResizer />}
         >
-          <EditorCommand className="z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
+          <EditorCommand className="bg-[#231a2c] z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
             <EditorCommandEmpty className="px-2 text-muted-foreground z-50">
               No results
             </EditorCommandEmpty>
@@ -209,7 +210,7 @@ const AdvancedEditor = ({
                 <EditorCommandItem
                   value={item.title}
                   onCommand={(val) => item.command!(val)}
-                  className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-accent aria-selected:bg-accent z-50`}
+                  className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-[#32273d] aria-selected:bg-accent z-50`}
                   key={item.title}
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-md border border-muted bg-background z-50">
@@ -227,7 +228,7 @@ const AdvancedEditor = ({
           </EditorCommand>
         </EditorContent>
         <button
-          className={"border disabled:text-slate-500 disabled:border-none"}
+          className={"border disabled:text-slate-500 disabled:border-none p-2"}
           onClick={() => {
             if (dashboardState == "edit") {
               const newDraftDate = new Date().toLocaleDateString("sv-SE");
@@ -274,7 +275,7 @@ const AdvancedEditor = ({
           Save Draft
         </button>
         <button
-          className={"border disabled:text-slate-500 disabled:border-none"}
+          className={"border disabled:text-slate-500 disabled:border-none p-2"}
           disabled={
             dashboardState == "edit"
               ? !isAllFieldsFilled || postStatus == "published"

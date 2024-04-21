@@ -40,7 +40,7 @@ export default function ExplorePage() {
         <section className="flex flex-col md:grid md:grid-cols-2 md:gap-24">
           {explorePublishedPosts.map((post: any) => {
             return (
-              <div className="mb-12 md:mb-0">
+              <div className="mb-12 md:mb-0" key={post.postId}>
                 <div className="flex gap-0.5 mb-2 items-center justify-start">
                   <p
                     className={
@@ -54,7 +54,12 @@ export default function ExplorePage() {
                     {post.bloggerName}
                   </p>
 
-                  <span className="block order-2">
+                  <span
+                    className="block order-2 cursor-pointer"
+                    onClick={() => {
+                      navigate(`/profiles/${post.bloggerId}/posts`);
+                    }}
+                  >
                     <ExternalLinkIcon color="violet" size={"16px"} />
                   </span>
                 </div>
@@ -79,7 +84,10 @@ export default function ExplorePage() {
                   <div className="mt-4">
                     {post.tags.map((tag: any) => {
                       return (
-                        <span className="text-xs bg-gray-800 text-gray-400 rounded-full px-3 py-1 mr-2">
+                        <span
+                          className="text-xs bg-gray-800 text-gray-400 rounded-full px-3 py-1 mr-2"
+                          key={crypto.randomUUID()}
+                        >
                           {tag}
                         </span>
                       );

@@ -17,13 +17,12 @@ export const ReadTimeCounter = ({
       <div className="flex items-center gap-1">
         <IconButton
           aria-label="Search database"
-          icon={<Plus size="24px" color="white" />}
+          icon={<MinusIcon size="24px" color="white" />}
           size="sm"
-          variant="solid"
           isRound={true}
-          colorScheme="white"
+          colorScheme="black"
           onClick={() => {
-            increaseReadTime(readTime);
+            decreaseReadTime(readTime);
           }}
         ></IconButton>
         <h2 className="text-purple-400 mx-auto">
@@ -32,12 +31,13 @@ export const ReadTimeCounter = ({
         </h2>
         <IconButton
           aria-label="Search database"
-          icon={<MinusIcon size="24px" color="white" />}
+          icon={<Plus size="24px" color="white" />}
           size="sm"
+          variant="solid"
           isRound={true}
-          colorScheme="black"
+          colorScheme="white"
           onClick={() => {
-            decreaseReadTime(readTime);
+            increaseReadTime(readTime);
           }}
         ></IconButton>
       </div>

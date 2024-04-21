@@ -1,14 +1,15 @@
 import { updateProfile } from "firebase/auth";
 import { auth, firestore } from "../firebase";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, collection, getDocs } from "firebase/firestore";
 
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const { bloggerId } = useParams();
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -28,6 +29,16 @@ export default function ProfilePage() {
         lastName.charAt(0).toUpperCase() + lastName.slice(1);
       await updateDoc(userRef, {
         bloggerName: capitalizedFirstName + " " + capitalizedLastName,
+      });
+
+      // Update existing posts with new blogger name
+      const bloggerSnapshot = await getDocs(collection(firestore, bloggerId!));
+      bloggerSnapshot.forEach((doc) => {
+        updateDoc(doc.ref, {
+          bloggerName: `${
+            firstName.charAt(0).toUpperCase() + firstName.slice(1)
+          } ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`,
+        });
       });
 
       navigate(`/profiles/${auth.currentUser!.uid}/dashboard`);

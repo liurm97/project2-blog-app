@@ -48,7 +48,7 @@ export default function BloggerPostPage() {
         <section className="flex flex-col md:grid md:grid-cols-2 md:gap-24">
           {bloggerPublishedPosts.map((post: any) => {
             return (
-              <div className="mb-12 md:mb-0">
+              <div className="mb-12 md:mb-0" key={post.postId}>
                 <p className="font-medium text-gray-400">{post.author}</p>
                 <p
                   className="text-2xl md:text-4xl leading-snug cursor-pointer"
@@ -68,7 +68,10 @@ export default function BloggerPostPage() {
                 <div className="mt-4">
                   {post.tags.map((tag: any) => {
                     return (
-                      <span className="text-xs bg-gray-800 text-gray-400 rounded-full px-3 py-1 mr-2">
+                      <span
+                        className="text-xs bg-gray-800 text-gray-400 rounded-full px-3 py-1 mr-2"
+                        key={crypto.randomUUID()}
+                      >
                         {tag}
                       </span>
                     );

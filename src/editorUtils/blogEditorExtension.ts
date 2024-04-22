@@ -9,6 +9,7 @@ import {
   Placeholder,
   AIHighlight,
 } from "novel/extensions";
+
 import { UploadImagesPlugin } from "novel/plugins";
 
 import { cx } from "class-variance-authority";

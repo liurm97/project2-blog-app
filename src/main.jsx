@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import Post from "./pages/Post";
 import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignupPage";
+import SignUpPage from "./pages/SignUpPage";
 import ErrorPage from "./pages/ErrorPage";
 import ExplorePage from "./pages/ExplorePage";
 import SettingsPage from "./pages/SettingsPage";

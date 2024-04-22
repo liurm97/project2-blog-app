@@ -26,7 +26,7 @@ export default function LoadingOverlay({
       {isLoadingVisible && (
         <motion.div
           exit={{ opacity: 0, transition: { duration: 1 } }}
-          className="bg-gradient-to-r from-[#1C0526] to-[#3c0a50] w-screen h-screen absolute flex flex-col justify-center items-center"
+          className="bg-gradient-to-r from-[#1C0526] to-[#3c0a50] z-[100001] w-screen h-screen absolute flex flex-col justify-center items-center"
         >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -39,7 +39,7 @@ export default function LoadingOverlay({
             exit={{ opacity: 0, x: -100, transition: { duration: 0.6 } }}
             className="font-medium uppercase tracking-[0.3rem] text-3xl"
           >
-            Sincerely
+            Jotter
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 8 }}

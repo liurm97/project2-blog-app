@@ -12,18 +12,17 @@ const NavBar = () => {
     onAuthStateChanged(auth, (user) => {
       user ? setIsLoggedIn(true) : setIsLoggedIn(false);
     });
-  });
-
+  }, []);
   return (
     <>
       <nav
         className={`py-6 px-16 w-full fixed flex top-0 backdrop-blur-sm ${
-          isLoggedIn ? "justify-end z-[10000]" : "justify-between z-1"
-        } align-center z-1 max-[420px]:justify-center`}
+          isLoggedIn ? "justify-end" : "justify-between"
+        } align-center z-[100000] max-[420px]:justify-center`}
       >
         {/*  */}
         {!isLoggedIn && (
-          <NavLink to={`/`} className="text-white hover:text-white">
+          <NavLink to={`/`} className="text-white hover:text-white py-3">
             Home
           </NavLink>
         )}

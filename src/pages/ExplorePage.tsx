@@ -41,7 +41,7 @@ export default function ExplorePage() {
           {explorePublishedPosts.map((post: any) => {
             return (
               <div className="mb-12 md:mb-0" key={post.postId}>
-                <div className="flex gap-0.5 mb-2 items-center justify-start">
+                <div className="flex gap-2 mb-2 items-center justify-start">
                   <p
                     className={
                       "cursor-pointer font-small text-gray-400 order-1"

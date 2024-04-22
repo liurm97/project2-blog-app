@@ -41,20 +41,22 @@ export default function ExplorePage() {
           {explorePublishedPosts.map((post: any) => {
             return (
               <div className="mb-12 md:mb-0">
-                <div className="flex gap-0.5 mb-2 items-center justify-start">
+                <div
+                  className="flex gap-0.5 mb-2 items-center justify-start"
+                  onClick={() => {
+                    navigate(`/profiles/${post.bloggerId}/posts`);
+                  }}
+                >
                   <p
                     className={
-                      "cursor-pointer font-small text-gray-400 order-1"
+                      "cursor-pointer font-small mr-1 text-gray-400 order-1"
                     }
                     // redirect to BloggerPostPage
-                    onClick={() => {
-                      navigate(`/profiles/${post.bloggerId}/posts`);
-                    }}
                   >
                     {post.bloggerName}
                   </p>
 
-                  <span className="block order-2">
+                  <span className="block order-2 cursor-pointer">
                     <ExternalLinkIcon color="violet" size={"16px"} />
                   </span>
                 </div>

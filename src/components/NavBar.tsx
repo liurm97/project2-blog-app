@@ -17,13 +17,13 @@ const NavBar = () => {
   return (
     <>
       <nav
-        className={`py-6 px-16 w-full fixed flex top-0 ${
-          isLoggedIn ? "justify-end" : "justify-between backdrop-blur-sm z-1"
+        className={`py-6 px-16 w-full fixed flex top-0 backdrop-blur-sm ${
+          isLoggedIn ? "justify-end z-[10000]" : "justify-between z-1"
         } align-center z-1 max-[420px]:justify-center`}
       >
         {/*  */}
         {!isLoggedIn && (
-          <NavLink to={`/`} className="text-white hover:text-white">
+          <NavLink to={`/`} className="text-white py-3 hover:text-white">
             Home
           </NavLink>
         )}
